@@ -4,16 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "build": "webpack",
-   "build-min": "webpack --config webpack.config.min.js",
-   "check": "tslint --type-check --project tsconfig.json --force --format stylish --config tslint.json",
-   "client": "jekyll build --source client --destination dist/",
-   "client-watch": "jekyll build --source client --destination dist/ --watch --incremental",
-   "deploy": "npm run check && npm run test && npm run build && npm run build-min && npm run doc && npm run client",
-   "doc": "typedoc --hideGenerator --readme README.md --target ES6 --module commonjs --mode file --out dist/doc/ source/",
-   "test": "karma start karma.config.js",
-   "test-watch-and-debug": "karma start karma.watch-and-debug.config.js"
- },
+    "build": "webpack",
+    "build-min": "webpack --config webpack.config.min.js",
+    "check": "tslint --type-check --project tsconfig.json --force --format stylish --config tslint.json",
+    "client": "jekyll build --source client --destination dist/",
+    "client-watch": "jekyll build --source client --destination dist/ --watch --incremental",
+    "deploy": "npm run check && npm run test && npm run build && npm run build-min && npm run doc && npm run client",
+    "doc": "typedoc --hideGenerator --readme README.md --target ES6 --module commonjs --mode file --out dist/doc/ source/",
+    "test": "karma start karma.config.js",
+    "test-watch-and-debug": "karma start karma.watch-and-debug.config.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
     "@types/socket.io": "^1.4.33",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.1.0",
     "karma": "^2.0.2",
     "karma-jasmine": "^1.1.2",
