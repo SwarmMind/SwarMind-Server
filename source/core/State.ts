@@ -18,6 +18,7 @@ export default class State {
         this.mapObjects.forEach((mapObject) => {
             serializedObjects.push(mapObject.serialize());
         });
+        //same as: this.mapObjects.map(mapObject => mapObject.serialize())
 
         const state = {
             mapObjects: serializedObjects,

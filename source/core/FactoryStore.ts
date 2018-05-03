@@ -47,7 +47,7 @@ export default class FactoryStore {
      */
     public removeObject(ID: string) {       // quick and dirty
         const index = this.mapObjects.indexOf(this.getObjectByID(ID));
-        assert(index >= 0);     //
+        assert(index >= 0);     // an object with this ID is in the store
         if(index >= 0){
             this.mapObjects.splice(index, 1);
         }
