@@ -1,5 +1,7 @@
-import World from "./core/World";
+import * as sio from 'socket.io';
 
-let world = new World(3, 4);
+const io = sio();
 
-console.log(world);
+io.onconnection(function() {
+    console.log('A client connected');
+});

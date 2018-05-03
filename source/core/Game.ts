@@ -1,6 +1,6 @@
+import Command from './Command';
 import State from './State';
 import World from './World';
-import Command from './Command';
 
 export default class Game {
     public world: World;
@@ -9,7 +9,7 @@ export default class Game {
     /**
      * starts a new round
      */
-    public newRound(commands: Command[]){
+    public newRound(commands: Command[]) {
         this.processCommands(commands);
         this.round++;
     }
@@ -17,21 +17,21 @@ export default class Game {
     /**
      * starts a new game
      */
-    public start(){
+    public start() {
 
     }
 
     /**
      * restarts the current game
      */
-    public restart(){
+    public restart() {
 
     }
 
     /**
      * returns the state-object that represents the current game-state
      */
-    public getState(): State{
+    public getState(): State {
         return this.world.getState();
     }
 
@@ -39,13 +39,13 @@ export default class Game {
      * integrated commands in game-state
      * @param commands selected commands to be integrated in game-state
      */
-    private processCommands(commands: Command[]){
-        for(const command of commands){
+    private processCommands(commands: Command[]) {
+        for (const command of commands) {
             this.processCommand(command);
         }
     }
 
-    private processCommand(command: Command){
+    private processCommand(command: Command) {
 
     }
 }

@@ -13,11 +13,12 @@
     "doc": "typedoc --hideGenerator --readme README.md --target ES6 --module commonjs --mode file --out dist/doc/ source/",
     "test": "karma start karma.config.js",
     "test-watch-and-debug": "karma start karma.watch-and-debug.config.js",
-    "start": "node ./dist/js/overlord.js" 
+    "start": "node ./dist/js/overlord.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "assert": "^1.4.1",
     "socket.io": "^2.1.0"
   },
   "devDependencies": {

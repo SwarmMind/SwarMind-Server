@@ -7,8 +7,8 @@ export default class Overmind {
     /**
      * returns the commands, that was choosen to be executed
      */
-    public getSelectedCommands()/*: Command[]*/ {
-
+    public getSelectedCommands(): Command[] {
+        return ;
     }
     /**
      * adds userCommand to commands-array

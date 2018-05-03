@@ -5,7 +5,7 @@ export default class CallCenter {
     /**
      * sends game-state to all clients
      */
-    public sendState(state: State){
+    public sendState(state: State) {
 
     }
 }

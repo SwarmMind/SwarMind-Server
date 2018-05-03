@@ -1,11 +1,11 @@
+import * as assert from 'assert';
 import MapObject from './MapObject';
 import NPCObject from './NPCObject';
 import UnitObject from './UnitObject';
 
 // TODO: Implement Iterator
 export default class FactoryStore {
-    private units: MapObject[];
-    private npcs: MapObject[];
+    private mapObjects: MapObject[];
 
     private unitCounter: number;
     private npcCounter: number;
@@ -13,15 +13,22 @@ export default class FactoryStore {
     /**
      * getObjectByID
      */
-    public getObjectByID(ID: number) {}
+    public getObjectByID(ID: string): MapObject {
+        for(const mapObject of this.mapObjects){
+            if(mapObject.ID == ID){
+                return mapObject
+            }
+        }
+        return null;
+    }
 
     /**
      * createNPC
      */
     public createNPC(positionX: number, positionY: number): NPCObject {
-        let npc = new UnitObject(positionX, positionY, `npc${this.npcCounter}`);
+        const npc = new UnitObject(positionX, positionY, `npc${this.npcCounter}`);
         this.npcCounter++;
-        this.npcs.push(npc);
+        this.mapObjects.push(npc);
         return npc;
     }
 
@@ -29,15 +36,27 @@ export default class FactoryStore {
      * createUnit
      */
     public createUnit(positionX: number, positionY: number): UnitObject {
-        let unit = new UnitObject(positionX, positionY, `unit${this.unitCounter}`);
+        const unit = new UnitObject(positionX, positionY, `unit${this.unitCounter}`);
         this.unitCounter++;
-        this.units.push(unit);
+        this.mapObjects.push(unit);
         return unit;
     }
 
     /**
      * removeObject
      */
-    public removeObject(ID: number) {}
+    public removeObject(ID: string) {       // quick and dirty
+        const index = this.mapObjects.indexOf(this.getObjectByID(ID));
+        assert(index >= 0);     //
+        if(index >= 0){
+            this.mapObjects.splice(index, 1);
+        }
+    }
+
+    *[Symbol.iterator]() {
+        for (const mapObject of this.mapObjects){
+            yield mapObject;
+        }
+    }
 
 }

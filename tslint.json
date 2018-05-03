@@ -38,13 +38,13 @@
        ],
        "whitespace": [
            true,
-           /*"check-branch",
+           "check-branch",
            "check-decl",
            "check-operator",
            "check-separator",
            "check-type",
-           "check-module"/*,
-           "check-preblock"*/
+           "check-module",
+           "check-preblock"
        ],
        "variable-name": [
            true,

@@ -12,7 +12,7 @@ export default class Controller {
     /**
      * starts a new game and the time loop
      */
-    public start(){
+    public start() {
         this.game.start();
         setInterval(() => {
             this.overmind.getSelectedCommands();
@@ -23,15 +23,15 @@ export default class Controller {
     /**
      * initializes new game and starts it
      */
-    public restart(){
+    public restart() {
 
     }
 
     /**
-     * 
-     * @param command 
+     * takes command and gives it to the overmind-object
+     * @param command command to be given to the overmind
      */
-    public takeCommand(command: UserCommand){
+    public takeCommand(command: UserCommand) {
         this.overmind.takeCommand(command);
     }
 }
