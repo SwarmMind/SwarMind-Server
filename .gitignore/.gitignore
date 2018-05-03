@@ -1,0 +1,9 @@
+node_modules/
+dist/
+client/_site
+client/.sass-cache
+client/.jekyll-metadata
+package-lock.json
+_reports/
+.vscode/
+.DS_Store
