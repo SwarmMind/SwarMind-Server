@@ -1,7 +1,4 @@
-import * as sio from 'socket.io';
+import Controller from './core/Controller';
 
-const io = sio();
-
-io.onconnection(function() {
-    console.log('A client connected');
-});
+let controller = new Controller();
+controller.start(10, 10);

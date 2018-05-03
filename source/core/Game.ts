@@ -16,16 +16,19 @@ export default class Game {
 
     /**
      * starts a new game
+     * @param width width of new game-world
+     * @param height height of new game-world
      */
-    public start() {
-
+    public start(width: number, height: number) {
+        this.round = 0;
+        this.world = new World(width, height);
     }
 
     /**
      * restarts the current game
      */
-    public restart() {
-
+    public restart(width: number, height: number) {
+        this.start(width, height);
     }
 
     /**
