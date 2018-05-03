@@ -1,5 +1,1 @@
-function log(str: string){
-    console.log(str);
-}
-
-log('4');
+import {} from 'socket.io';
