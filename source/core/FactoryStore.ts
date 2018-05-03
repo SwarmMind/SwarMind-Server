@@ -1,8 +1,14 @@
 import MapObject from './MapObject';
+import NPCObject from './NPCObject';
+import UnitObject from './UnitObject';
 
 // TODO: Implement Iterator
 export default class FactoryStore {
-    private mapObjects: MapObject[];
+    private units: MapObject[];
+    private npcs: MapObject[];
+
+    private unitCounter: number;
+    private npcCounter: number;
 
     /**
      * getObjectByID
@@ -12,12 +18,22 @@ export default class FactoryStore {
     /**
      * createNPC
      */
-    public createNPC() {}
+    public createNPC(positionX: number, positionY: number): NPCObject {
+        let npc = new UnitObject(positionX, positionY, `npc${this.npcCounter}`);
+        this.npcCounter++;
+        this.npcs.push(npc);
+        return npc;
+    }
 
     /**
      * createUnit
      */
-    public createUnit() {}
+    public createUnit(positionX: number, positionY: number): UnitObject {
+        let unit = new UnitObject(positionX, positionY, `unit${this.unitCounter}`);
+        this.unitCounter++;
+        this.units.push(unit);
+        return unit;
+    }
 
     /**
      * removeObject
