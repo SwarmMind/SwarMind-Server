@@ -11,8 +11,8 @@ module.exports =
 
        output: {
            path: __dirname + '/dist/js',
-           filename: 'flowMapper.js',
-           library: 'FlowMapper',
+           filename: 'overlord.js',
+           library: 'Overlord',
        },
 
        resolve: {
