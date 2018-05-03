@@ -6,13 +6,13 @@ module.exports =
        context: __dirname + '/source',
        cache: false,
        entry: {
-           main: ['./require.ts', './app.ts']
+           main: ['./require.ts', './index.ts']
        },
 
        output: {
            path: __dirname + '/dist/js',
-           filename: 'flowMapper.js',
-           library: 'FlowMapper',
+           filename: 'overlord.js',
+           library: 'Overlord',
        },
 
        resolve: {
