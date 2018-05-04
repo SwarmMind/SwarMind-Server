@@ -9,4 +9,12 @@ export default class UserCommand {
         this.command = command;
         this.user = user;
     }
+
+    public getCommand() {
+        return this.command;
+    }
+
+    public getUser() {
+        return this.user;
+    }
 }

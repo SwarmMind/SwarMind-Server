@@ -8,4 +8,8 @@ export default class User {
     public getWeight() {
         return this.weight;
     }
+
+    public setWeight(newWeight: number) {
+        this.weight = newWeight;
+    }
 }
