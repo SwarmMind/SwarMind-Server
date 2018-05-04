@@ -14,7 +14,7 @@ export default class Controller {
         this.initKeyClasses();
     }
 
-    private initKeyClasses(){
+    private initKeyClasses() {
         this.callCenter = new CallCenter(this);
         this.game = new Game();
         this.overmind = new Overmind();
@@ -27,7 +27,7 @@ export default class Controller {
         }, duration);
     }
 
-    private clearInterval(){
+    private clearInterval() {
         clearInterval(this.intervalID);
     }
 
@@ -37,7 +37,7 @@ export default class Controller {
     public start(width: number, height: number) {
         this.game.start(width, height);
         this.setInterval(10 * 1000);
-    }    
+    }
 
     /**
      * initializes new game and starts it

@@ -2,8 +2,8 @@ import Command from './Command';
 import UserCommand from './UserCommand';
 
 export default class Overmind {
-    private commandCountToSelect: number = 5;
-    public commands: Command[] = [];
+    private commandCountToSelect = 5;
+    public commands: UserCommand[] = [];
 
     private selectCommand(): Command {
         return;
@@ -13,13 +13,13 @@ export default class Overmind {
      * returns the commands, that was choosen to be executed
      */
     public getSelectedCommands(): Command[] {
-        let commands: Command[] = [];
+        const selectedCommands: Command[] = [];
 
         for (let i = 0; i < this.commandCountToSelect; i++) {
-            commands.push(this.selectCommand());
+            selectedCommands.push(this.selectCommand());
         }
 
-        return commands;
+        return selectedCommands;
     }
 
     /**

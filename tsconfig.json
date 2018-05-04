@@ -15,8 +15,8 @@
        "removeComments": true,
        "preserveConstEnums": true,
        "skipLibCheck": true,
-       "sourceMap": false
-           //"strictNullChecks": true
+       "sourceMap": false,
+       "downlevelIteration": true   // Important for iterator implementations
    },
    "exclude": [
        "node_modules",

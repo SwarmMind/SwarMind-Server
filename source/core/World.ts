@@ -31,11 +31,12 @@ export default class World {
     /**
      * moveUnitBy
      */
-    public moveUnitBy(ID: string, dX: number, dY: number) {     // maybe we should guarantee whether move is possible
+    public moveUnitBy(ID: string, dX: number, dY: number) {
+        // maybe we should guarantee whether move is possible
         const unit = this.store.getObjectByID(ID);
         unit.posX += dX;
         unit.posY += dY;
-     }
+    }
 
     /**
      * addUnit
@@ -66,7 +67,11 @@ export default class World {
      * getState
      */
     public getState(): State {
-        return new State();
+        const state =  new State();
+        for (const obj of this.store) { // Does this work with const?
+            state.addMapObject(obj);
+        }
+        return state;
     }
 
 }

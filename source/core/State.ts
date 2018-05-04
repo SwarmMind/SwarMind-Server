@@ -3,6 +3,8 @@ import MapObject from './MapObject';
 export default class State {
     private mapObjects: MapObject[];
 
+    constructor() {}
+
     /**
      * addMapObject
      */

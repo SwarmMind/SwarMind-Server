@@ -22,6 +22,7 @@
     "socket.io": "^2.1.0"
   },
   "devDependencies": {
+    "@types/es6-shim": "^0.31.36",
     "@types/jasmine": "^2.8.6",
     "@types/socket.io": "^1.4.33",
     "istanbul-instrumenter-loader": "^3.0.1",
