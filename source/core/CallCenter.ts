@@ -11,7 +11,7 @@ export default class CallCenter {
 
         const io = sio();
 
-        io.onconnection(function (socket: sio.Socket) {
+        io.onconnection(function(socket: sio.Socket) {
             console.log('A client connected');
 
             this.sockets.push(socket);
@@ -27,12 +27,12 @@ export default class CallCenter {
      */
     public sendState(state: State) {
         const stateAsJSON = this.getJSONFromState(state);
-        for(const socket of this.sockets){
+        for (const socket of this.sockets) {
             socket.emit('state', stateAsJSON);
-        }        
+        }
     }
 
-    private getJSONFromState(state: State){
+    private getJSONFromState(state: State) {
         return ;
     }
 }
