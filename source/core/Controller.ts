@@ -20,11 +20,8 @@ export default class Controller {
         this.overmind = new Overmind();
     }
 
-    private setInterval(duration: number) {
-        this.intervalID = window.setInterval(() => {        // window before setInterval only because of typescript
-            this.game.newRound(this.overmind.getSelectedCommands());
-            this.callCenter.sendState(this.game.getState());
-        }, duration);
+    private setInterval(duration: number) {         // window before setInterval only because of typescript
+        this.intervalID = window.setInterval(this.processRound(), duration);
     }
 
     private clearInterval() {
@@ -54,5 +51,13 @@ export default class Controller {
      */
     public takeCommand(command: UserCommand) {
         this.overmind.takeCommand(command);
+    }
+
+    private processRound() {
+        const commandLists = this.overmind.getCommandPriorities();
+
+        this.overmind.resetCommands();
+        this.game.newRound(commandLists);
+        this.callCenter.sendState(this.game.getState());
     }
 }

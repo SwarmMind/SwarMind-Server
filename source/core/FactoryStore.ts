@@ -17,7 +17,7 @@ export default class FactoryStore implements IterableIterator<MapObject> {
      */
     public getObjectByID(ID: string): MapObject {
         for (const mapObject of this.mapObjects) {
-            if (mapObject.ID === ID) {
+            if (mapObject.getID() === ID) {
                 return mapObject;
             }
         }
@@ -28,7 +28,7 @@ export default class FactoryStore implements IterableIterator<MapObject> {
      * createNPC
      */
     public createNPC(positionX: number, positionY: number): NPCObject {
-        const npc = new UnitObject(positionX, positionY, `npc${this.npcCounter}`);
+        const npc = new UnitObject(`npc${this.npcCounter}`, positionX, positionY);
         this.npcCounter++;
         this.mapObjects.push(npc);
         return npc;
@@ -38,7 +38,7 @@ export default class FactoryStore implements IterableIterator<MapObject> {
      * createUnit
      */
     public createUnit(positionX: number, positionY: number): UnitObject {
-        const unit = new UnitObject(positionX, positionY, `unit${this.unitCounter}`);
+        const unit = new UnitObject(`unit${this.unitCounter}`, positionX, positionY);
         this.unitCounter++;
         this.mapObjects.push(unit);
         return unit;

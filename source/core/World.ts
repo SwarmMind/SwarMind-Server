@@ -34,8 +34,8 @@ export default class World {
     public moveUnitBy(ID: string, dX: number, dY: number) {
         // maybe we should guarantee whether move is possible
         const unit = this.store.getObjectByID(ID);
-        unit.posX += dX;
-        unit.posY += dY;
+        unit.setPosX(unit.getPosX() + dX);
+        unit.setPosY(unit.getPosY() + dY);
     }
 
     /**
@@ -60,7 +60,7 @@ export default class World {
     public removeObject(ID: string) {
         const unit = this.store.getObjectByID(ID);
         this.store.removeObject(ID);
-        this.fieldContents[unit.posY][unit.posX] = null;
+        this.fieldContents[unit.getPosY()][unit.getPosX()] = null;
     }
 
     /**

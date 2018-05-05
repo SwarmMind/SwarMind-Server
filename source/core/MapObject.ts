@@ -1,12 +1,12 @@
 export default class MapObject {
-    public posX: number;
-    public posY: number;
-    public ID: string;
+    private ID: string;
+    private posX: number;
+    private posY: number;
 
-    public constructor(positionX: number, positionY: number, ID: string) {
+    public constructor(ID: string, positionX: number, positionY: number) {
+        this.ID = ID;
         this.posX = positionX;
         this.posY = positionY;
-        this.ID = ID;
     }
 
     /**
@@ -15,5 +15,25 @@ export default class MapObject {
      */
     public serialize() {
         return { ID: this.ID, posX: this.posX, posY: this.posY };
+    }
+
+    getID() {
+        return this.ID;
+    }
+
+    getPosX() {
+        return this.posX;
+    }
+
+    getPosY() {
+        return this.posY;
+    }
+
+    setPosX(newPos: number) {
+        this.posX = newPos;
+    }
+
+    setPosY(newPos: number) {
+        this.posY = newPos;
     }
 }

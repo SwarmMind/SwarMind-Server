@@ -1,6 +1,7 @@
 import * as sio from 'socket.io';
 import Controller from './Controller';
 import State from './State';
+import UserCommand from './UserCommand';
 
 export default class CallCenter {
     private controller: Controller;
@@ -33,6 +34,11 @@ export default class CallCenter {
     }
 
     private getJSONFromState(state: State) {
-        return ;
+        return state.serialize();
+    }
+
+    // TODO: should not be public
+    public receiveCommand(command: UserCommand) {
+        this.controller.takeCommand(command);
     }
 }

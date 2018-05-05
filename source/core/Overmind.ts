@@ -3,16 +3,20 @@ import UserCommand from './UserCommand';
 import UserCommandCollection from './UserCommandCollection';
 
 export default class Overmind {
-    private commandCountToSelect = 5;
-    public commands: UserCommand[] = [];
+    // private commandCountToSelect = 5;
+    // private commands: UserCommand[] = [];
     private userCommands: UserCommandCollection;
 
     constructor() {
         this.userCommands = new UserCommandCollection();
     }
 
+    /**
+     * @deprecated
+     * @param commandList List of commands to select one from
+     */
     private selectCommand(commandList: Array<UserCommand>): Command {
-        return;
+        return commandList.pop().getCommand();
     }
 
     private prioritizeCommands(commandList: Array<UserCommand>): Array<Command> {
@@ -60,6 +64,7 @@ export default class Overmind {
     }
 
     /**
+     * @deprecated
      * returns the commands, that was choosen to be executed
      */
     public getSelectedCommands(): Command[] {
@@ -71,7 +76,6 @@ export default class Overmind {
         });
 
         return selectedCommands;
-
 
         /*for (let i = 0; i < this.commandCountToSelect; i++) {
             selectedCommands.push(this.selectCommand());
@@ -97,8 +101,7 @@ export default class Overmind {
      */
     public takeCommand(userCommand: UserCommand) {
         this.userCommands.addCommand(userCommand);
-
-        this.commands.push(userCommand);
+        // this.commands.push(userCommand);
     }
 
     /**
@@ -106,6 +109,6 @@ export default class Overmind {
      */
     public resetCommands() {
         this.userCommands = new UserCommandCollection();
-        this.commands = [];
+        // this.commands = [];
     }
 }
