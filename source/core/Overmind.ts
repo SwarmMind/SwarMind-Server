@@ -2,6 +2,8 @@ import Command from './Command';
 import UserCommand from './UserCommand';
 import UserCommandCollection from './UserCommandCollection';
 
+// TODO: Implement bias updating
+
 export default class Overmind {
     // private commandCountToSelect = 5;
     // private commands: UserCommand[] = [];

@@ -1,6 +1,8 @@
 export default class Command {
     private unitID: string;
+    // Has to be one of 'move' or 'shoot'
     private type: string;
+    // Has to be one of 'north', 'south', 'east' or 'west'
     private direction: string;
 
     constructor(type, direction) {

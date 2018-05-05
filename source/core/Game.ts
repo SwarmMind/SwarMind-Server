@@ -2,6 +2,8 @@ import Command from './Command';
 import State from './State';
 import World from './World';
 
+// TODO: Implement NPC-actions
+
 export default class Game {
     private world: World;
     private round: number;      // could an overflow occur???
@@ -44,26 +46,84 @@ export default class Game {
         return this.world.getState();
     }
 
-    /**
-     * integrated commands in game-state
-     * @param commands selected commands to be integrated in game-state
-     */
-    /*private processCommands(commands: Command[]) {
-        for (const command of commands) {
-            this.processCommand(command);
-        }
-    }*/
-
     private processCommand(command: Command) {
-        console.log(command);
+        const commandType = command.getType();
+        const unitID = command.getUnitID();
+        const direction = command.getDirection();
+
+        const directionX = this.mapDirection(direction)[0];
+        const directionY = this.mapDirection(direction)[1];
+
+        if (commandType === 'move') {
+            this.world.moveUnitIfPossible(unitID, directionX, directionY);
+        } else if (commandType === 'shoot') {
+            this.world.processShot(unitID, directionX, directionY);
+        }
     }
 
-    // TODO: Implement correctly
+    /**
+     * Processes an List of lists of commands - one list for each unit
+     * The shoots will be processed first
+     * @param commandLists List of lists of commands
+     */
     private processCommandLists(commandLists: Array<Array<Command>>) {
+        const shootCommands: Array<Command> = [];
+        const moveCommands: Array<Command> = [];
+
         commandLists.forEach((commandList) => {
-            commandList.forEach((command) => {
-                this.processCommand(command);
-            });
+            while (commandList.length > 0) {
+                const command = commandList[0];
+                const commandType = command.getType();
+
+                if (!this.isCommandPossible(command)) {
+                    commandList.splice(0, 1);
+                    continue;
+                }
+
+                if (commandType === 'shoot') {
+                    shootCommands.push(command);
+                } else if (commandType === 'move') {
+                    moveCommands.push(command);
+                }
+                break;
+            }
         });
+
+        this.processCommandList(shootCommands);
+        this.processCommandList(moveCommands);
+    }
+
+    private processCommandList(list: Array<Command>) {
+        list.forEach((command) => {
+            this.processCommand(command);
+        });
+    }
+
+    private mapDirection(direction: string): Array<number> {
+        let directionX = 0;
+        let directionY = 0;
+        if (direction === 'north') { directionY = -1; }
+        if (direction === 'south') { directionY = +1; }
+        if (direction === 'west') { directionX = -1; }
+        if (direction === 'east') { directionX = +1; }
+
+        return [directionX, directionY];
+    }
+
+    private isCommandPossible(command: Command): boolean {
+        const unitID = command.getUnitID();
+        const commandType = command.getType();
+        const direction = command.getDirection();
+
+        const directionX = this.mapDirection(direction)[0];
+        const directionY = this.mapDirection(direction)[1];
+
+        if (commandType === 'shoot') { return true; }
+
+        if (commandType === 'move') {
+            return this.world.isMovePossible(unitID, directionX, directionY);
+        }
+
+        return false;
     }
 }
