@@ -137,17 +137,18 @@ export default class Game {
     }
 
     private addNPC() {
+        console.log(this.world.getSize());
         const direction = Math.floor((Math.random() * 4) + 1);
         if (direction === 1 || direction === 3) {
-            const place = Math.floor((Math.random() * this.world.getSize[0]) + 1);
+            const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
             if (direction === 1) { this.world.addNPC(place - 1, 0); }
-            if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize[0] - 1); }
+            if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize()[0] - 1); }
 
             return true;
         } else if (direction === 2 || direction === 4) {
-            const place = Math.floor((Math.random() * this.world.getSize[0]) + 1);
+            const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
             if (direction === 2) { this.world.addNPC(0, place - 1); }
-            if (direction === 4) { this.world.addNPC(this.world.getSize[1] - 1, place - 1); }
+            if (direction === 4) { this.world.addNPC(this.world.getSize()[1] - 1, place - 1); }
 
             return true;
         }
