@@ -1,4 +1,5 @@
-import * as sio from 'socket.io';
+// import * as sio from 'socket.io';
+import sio = require('socket.io');
 import Controller from './Controller';
 import State from './State';
 import UserCommand from './UserCommand';

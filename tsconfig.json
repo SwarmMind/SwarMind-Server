@@ -7,17 +7,28 @@
            "dom",
            "es2016" // important for ie11 support
        ],
-       "target": "es5",
+       "target": "es6",
        "module": "commonjs",
+       "moduleResolution": "node",
        "noImplicitAny": false,
        "noUnusedLocals": true,
        "noUnusedParameters": true,
        "removeComments": true,
        "preserveConstEnums": true,
        "skipLibCheck": true,
-       "sourceMap": false,
-       "downlevelIteration": true   // Important for iterator implementations
+       "sourceMap": true,
+       "downlevelIteration": true,   // Important for iterator implementations
+       "outDir": "dist",
+       "baseUrl": ".",
+       "paths": {
+           "*": [
+               "node_modules/*"
+           ]
+       }
    },
+   "include": [
+       "source/**/*"
+   ],
    "exclude": [
        "node_modules",
        "source/tests"
