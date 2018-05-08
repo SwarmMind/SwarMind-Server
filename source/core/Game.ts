@@ -2,8 +2,6 @@ import Command from './Command';
 import State from './State';
 import World from './World';
 
-// TODO: Implement NPC-actions
-
 export default class Game {
     private world: World;
     private round: number;      // could an overflow occur???

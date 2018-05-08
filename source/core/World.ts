@@ -102,7 +102,6 @@ export default class World {
      * addNPC
      */
     public addNPC(x: number, y: number) {
-        console.log('return:  ', x, y);
         assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
         this.fieldContents[x][y] = this.store.createNPC(x, y);
     }
