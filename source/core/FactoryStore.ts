@@ -5,7 +5,7 @@ import UnitObject from './UnitObject';
 
 // TODO: Implement Iterator
 export default class FactoryStore implements IterableIterator<MapObject> {
-    private mapObjects: MapObject[];
+    private mapObjects: MapObject[] = [];
 
     private unitCounter: number;
     private npcCounter: number;

@@ -8,12 +8,12 @@ export default class Controller {
     private game: Game;
     private overmind: Overmind;
 
-    private intervalID: number;         // for the handle returned by setInterval()
+    private intervalID: any;         // for the handle returned by setInterval()
     private serverPort: number;
 
     public constructor(port: number = 3000) {
-        this.initKeyClasses();
         this.serverPort = port;
+        this.initKeyClasses();
     }
 
     private initKeyClasses() {
@@ -23,7 +23,7 @@ export default class Controller {
     }
 
     private setInterval(duration: number) {         // window before setInterval only because of typescript
-        this.intervalID = window.setInterval(this.processRound(), duration);
+        this.intervalID = setInterval(this.processRound, duration);
     }
 
     private clearInterval() {

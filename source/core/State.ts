@@ -1,7 +1,7 @@
 import MapObject from './MapObject';
 
 export default class State {
-    private mapObjects: MapObject[];
+    private mapObjects: MapObject[] = [];
 
     constructor() {}
 

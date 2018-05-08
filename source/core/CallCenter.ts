@@ -17,7 +17,7 @@ export default class CallCenter {
         const server = HTTP.createServer(APP);
         const io = SIO(server);
 
-        io.onconnection(function(socket: SIO.Socket) {
+        io.on('connection', function(socket: SIO.Socket) {
             console.log('A client connected');
 
             this.sockets.push(socket);
@@ -26,7 +26,7 @@ export default class CallCenter {
                 this.sockets.splice(this.sockets.indexOf(socket), 1);
             });
         });
-
+        console.log(arguments);
         server.listen(port, () => {
             console.log(`listening on Port: ${port}`);
         });
