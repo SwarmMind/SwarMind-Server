@@ -16,16 +16,10 @@ export default class State {
      * serialize
      */
     public serialize(): string {
-        const serializedObjects = [];
-        this.mapObjects.forEach((mapObject) => {
-            serializedObjects.push(mapObject.serialize());
-        });
-        // same as: this.mapObjects.map(mapObject => mapObject.serialize())
-
         const state = {
-            mapObjects: serializedObjects,
+            mapObjects: this.mapObjects.map(mapObject => mapObject.serialize()),
         };
 
-        return JSON.stringify(state);
+        return JSON.stringify(state);       // stringify in COM
     }
 }

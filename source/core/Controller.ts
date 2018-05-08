@@ -9,13 +9,15 @@ export default class Controller {
     private overmind: Overmind;
 
     private intervalID: number;         // for the handle returned by setInterval()
+    private serverPort: number;
 
-    public constructor() {
+    public constructor(port: number = 3000) {
         this.initKeyClasses();
+        this.serverPort = port;
     }
 
     private initKeyClasses() {
-        this.callCenter = new CallCenter(this);
+        this.callCenter = new CallCenter(this, this.serverPort);
         this.game = new Game();
         this.overmind = new Overmind();
     }
