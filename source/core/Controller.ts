@@ -41,7 +41,7 @@ export default class Controller {
      */
     public start(width: number, height: number) {
         this.game.start(width, height);
-        this.setInterval(10 * 100/*0*/);
+        this.setInterval(10 * 1000);
     }
 
     /**
