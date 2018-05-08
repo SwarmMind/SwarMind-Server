@@ -5,7 +5,8 @@ export default class Command {
     // Has to be one of 'north', 'south', 'east' or 'west'
     private direction: string;
 
-    constructor(type, direction) {
+    constructor(unitID, type, direction) {
+        this.unitID = unitID;
         this.type = type;
         this.direction = direction;
     }

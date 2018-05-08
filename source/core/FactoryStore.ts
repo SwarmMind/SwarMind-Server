@@ -9,8 +9,6 @@ export default class FactoryStore implements Iterable<MapObject> {
     private unitCounter: number;
     private npcCounter: number;
 
-    private pointer = 0;
-
     /**
      * getObjectByID
      */

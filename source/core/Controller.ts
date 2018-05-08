@@ -1,4 +1,5 @@
 import CallCenter from './CallCenter';
+import Command from './Command';
 import Game from './Game';
 import Overmind from './Overmind';
 import UserCommand from './UserCommand';
@@ -56,8 +57,11 @@ export default class Controller {
      * takes command and gives it to the overmind-object
      * @param command command to be given to the overmind
      */
-    public takeCommand(command: UserCommand) {
-        this.overmind.takeCommand(command);
+    public takeCommand(command: Command, userID: number) {
+        const user = this.userManager.getUserByID(userID);
+        const userCommand = new UserCommand(command, user);
+
+        this.overmind.takeCommand(userCommand);
     }
 
     private processRound() {
@@ -79,5 +83,9 @@ export default class Controller {
             const user = this.userManager.getUserByID(userID);
             user.setWeight(user.getWeight() + 0.3);
         });
+    }
+
+    public registerNewUser(): number {
+        return this.userManager.addUser();
     }
 }
