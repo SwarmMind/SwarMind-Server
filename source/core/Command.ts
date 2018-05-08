@@ -1,11 +1,14 @@
+import * as assert from 'assert';
+
 export default class Command {
     private unitID: string;
-    // Has to be one of 'move' or 'shoot'
     private type: string;
-    // Has to be one of 'north', 'south', 'east' or 'west'
     private direction: string;
 
     constructor(unitID, type, direction) {
+        assert(['move', 'shoot'].includes(type));
+        assert(['north', 'south', 'east', 'west'].includes(direction));
+
         this.unitID = unitID;
         this.type = type;
         this.direction = direction;

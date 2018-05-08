@@ -56,12 +56,12 @@ export default class Game {
         const unitID = command.getUnitID();
         const direction = command.getDirection();
 
-        const directionX = this.mapDirection(direction)[0];
-        const directionY = this.mapDirection(direction)[1];
+        const [directionX, directionY] = this.mapDirection(direction);
 
         if (commandType === 'move') {
             this.world.moveUnitIfPossible(unitID, directionX, directionY);
-        } else if (commandType === 'shoot') {
+        } 
+        else if (commandType === 'shoot') {
             this.world.processShot(unitID, directionX, directionY);
         }
     }
@@ -90,7 +90,7 @@ export default class Game {
                 } else if (commandType === 'move') {
                     moveCommands.push(command);
                 }
-                break;
+                break;          
             }
         });
 
@@ -120,11 +120,11 @@ export default class Game {
         const commandType = command.getType();
         const direction = command.getDirection();
 
-        const directionX = this.mapDirection(direction)[0];
-        const directionY = this.mapDirection(direction)[1];
+        const [directionX, directionY] = this.mapDirection(direction);
 
-        if (commandType === 'shoot') { return true; }
-
+        if (commandType === 'shoot') { 
+            return true; 
+        }
         if (commandType === 'move') {
             return this.world.isMovePossible(unitID, directionX, directionY);
         }
@@ -137,16 +137,11 @@ export default class Game {
     }
 
     private addNPC() {
-        console.log(this.world.getSize());
         const direction = Math.floor((Math.random() * 4) + 1);
-        if (direction === 1 || direction === 3) {
-            const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
+        const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
+        if (direction >= 1 && direction <= 4) {                                     // why the if???
             if (direction === 1) { this.world.addNPC(place - 1, 0); }
             if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize()[0] - 1); }
-
-            return true;
-        } else if (direction === 2 || direction === 4) {
-            const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
             if (direction === 2) { this.world.addNPC(0, place - 1); }
             if (direction === 4) { this.world.addNPC(this.world.getSize()[1] - 1, place - 1); }
 

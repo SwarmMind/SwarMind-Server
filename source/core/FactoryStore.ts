@@ -30,7 +30,7 @@ export default class FactoryStore implements Iterable<MapObject> {
      * createNPC
      */
     public createNPC(positionX: number, positionY: number): NPCObject {
-        const npc = new UnitObject(`npc${this.npcCounter}`, positionX, positionY);
+        const npc = new NPCObject(`npc${this.npcCounter}`, positionX, positionY);
         this.npcCounter++;
         this.mapObjects.push(npc);
         return npc;
@@ -78,7 +78,6 @@ export default class FactoryStore implements Iterable<MapObject> {
     }
 
     *[Symbol.iterator]() {
-        // For what is the * symbol?
         for (const mapObject of this.mapObjects) {
             yield mapObject;
         }
