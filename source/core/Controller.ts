@@ -22,8 +22,8 @@ export default class Controller {
         this.overmind = new Overmind();
     }
 
-    private setInterval(duration: number) {         // window before setInterval only because of typescript
-        this.intervalID = setInterval(this.processRound, duration);
+    private setInterval(duration: number) {         // if the function is not binded it does not know the this context
+        this.intervalID = setInterval(this.processRound.bind(this), duration);
     }
 
     private clearInterval() {

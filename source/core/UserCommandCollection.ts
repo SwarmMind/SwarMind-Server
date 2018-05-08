@@ -17,9 +17,9 @@ export default class UserCommandCollection {
 
         this.commands.forEach((command) => {
             const ID = command.getCommand().getUnitID();
+            const index = unitIDList.indexOf(ID);
 
-            if (unitIDList.includes(ID)) {
-                const index = unitIDList.indexOf(ID);
+            if (index != -1) {                          // ID is in unitIDList
                 listArray[index].push(command);
             } else {
                 unitIDList.push(ID);

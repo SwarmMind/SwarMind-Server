@@ -10,11 +10,11 @@ export default class UserCommand {
         this.user = user;
     }
 
-    public getCommand() {
+    public getCommand() {       // js getter???
         return this.command;
     }
 
-    public getUser() {
+    public getUser() {          // js getter???
         return this.user;
     }
 }
