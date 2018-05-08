@@ -27,8 +27,17 @@ module.exports =
                    include: /(source)/,
                    exclude: /(node_modules|source\/tests)/,
                    use: { loader: 'ts-loader' }
-               }]
+               },
+               {
+                test: /\.node$/,
+                use: 'node-loader'
+              }
+            ]
        },
        plugins: [],
        devtool: 'sourcemap',
+       node: {
+        fs: 'empty'
+      },
+      target: 'node'
    };

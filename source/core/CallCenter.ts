@@ -1,18 +1,21 @@
-import * as sio from 'socket.io';
+import * as SIO from 'socket.io';
+import * as APP from 'express';
+import * as HTTP from 'http';
 import Controller from './Controller';
 import State from './State';
 import UserCommand from './UserCommand';
 
 export default class CallCenter {
     private controller: Controller;
-    private sockets: sio.Socket[] = [];
+    private sockets: SIO.Socket[] = [];
 
-    constructor(controller: Controller) {
+    constructor(controller: Controller, port: number) {
         this.controller = controller;
+    
+        let server = HTTP.createServer(APP);
+        const io = SIO(server);
 
-        const io = sio();
-
-        io.onconnection(function(socket: sio.Socket) {
+        io.onconnection(function(socket: SIO.Socket) {
             console.log('A client connected');
 
             this.sockets.push(socket);
@@ -20,6 +23,10 @@ export default class CallCenter {
             socket.on('disconnect', () => {
                 this.sockets.splice(this.sockets.indexOf(socket), 1);
             });
+        });
+
+        server.listen(port, function () {
+            console.log(`listening on Port: ${port}`);
         });
     }
 
