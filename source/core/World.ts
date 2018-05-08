@@ -126,6 +126,70 @@ export default class World {
         return state;
     }
 
+    public getSize(): Array<number> {
+        return [this.sizeX, this.sizeY];
+    }
+
+    public doNPCActions() {
+        const npcs = this.store.getNPCs();
+        const units = this.store.getUnits();
+
+        npcs.forEach((npc) => {
+            let minDist = this.sizeX + this.sizeY;
+            let candidate = null;
+
+            for (let i = 0; i < units.length; i++) {
+                const unit = units[i];
+                const dist = unit.getDistance(npc.getPosX(), npc.getPosY());
+                if (dist < minDist) {
+                    minDist = dist;
+                    candidate = unit;
+                }
+            }
+
+            if (candidate !== null) {
+                const dist = candidate.getDistance(npc.getPosX(), npc.getPosY());
+                const distX = candidate.getPosX() - npc.getPosX();
+                const distY = candidate.getPosY() - npc.getPosY();
+
+                if (dist <= 1 && (npc.getPosX() !== candidate.getPosX() || npc.getPosY() !== candidate.getPosY())) {
+                    // Kill the unit
+                    this.removeObject(candidate.getID());
+                } else {
+                    // Pretty quick and dirty...
+                    if (Math.abs(distX) > Math.abs(distY)) {
+                        if (distX > 0) {
+                            npc.setPosX(npc.getPosX() + 1);
+                        } else {
+                            npc.setPosX(npc.getPosX() - 1);
+                        }
+                    } else if (Math.abs(distX) < Math.abs(distY)) {
+                        if (distY > 0) {
+                            npc.setPosY(npc.getPosY() + 1);
+                        } else {
+                            npc.setPosY(npc.getPosY() - 1);
+                        }
+                    } else {
+                        const rand = Math.floor((Math.random()) * 2 + 1);
+                        if (rand === 1) {
+                            if (distX > 0) {
+                                npc.setPosX(npc.getPosX() + 1);
+                            } else {
+                                npc.setPosX(npc.getPosX() - 1);
+                            }
+                        } else {
+                            if (distY > 0) {
+                                npc.setPosY(npc.getPosY() + 1);
+                            } else {
+                                npc.setPosY(npc.getPosY() - 1);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     private scanForFirstHit(posX: number, posY: number, directionX: number, directionY: number) {
         if (directionX > 0) { posX++; }
         if (directionX < 0) { posX--; }

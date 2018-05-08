@@ -4,6 +4,11 @@ export default class UserManager implements Iterable<User> {
     private users: Array<User>;
     private lastID: number;
 
+    constructor() {
+        this.users = [];
+        this.lastID = 0;
+    }
+
     public addUser() {
         const ID = this.lastID + 1;
         const user = new User(ID);

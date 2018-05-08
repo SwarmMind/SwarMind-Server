@@ -1,7 +1,6 @@
-
-import APP = require('express');
-import HTTP = require('http');
-import SIO = require('socket.io');
+import app = require('express');
+import http = require('http');
+import sio = require('socket.io');
 
 import Command from './Command';
 import Connection from './Connection';
@@ -10,16 +9,25 @@ import State from './State';
 
 export default class CallCenter {
     private controller: Controller;
-    // private sockets: SIO.Socket[] = [];
+    private sockets: sio.Socket[] = [];
     private connections: Array<Connection>;
 
     constructor(controller: Controller, port: number) {
         this.controller = controller;
+        this.connections = [];
 
-        const server = HTTP.createServer(APP);
-        const io = SIO(server);
+        const server = http.createServer(app);    // Made APP to a function (thats how its used in the chat example)
 
-        io.on('connection', function(socket: SIO.Socket) {
+        /*app().get('/', (req, res) => {
+            res.sendFile(__dirname + '/index.html');
+        });
+        app().get('/', (req, res) => {
+            res.send('<h1>Hello world</h1>');
+        });*/
+
+        const io = sio(server);
+
+        io.on('connection', (socket: sio.Socket) => {
             console.log('A client connected');
 
             // this.sockets.push(socket);
@@ -29,15 +37,15 @@ export default class CallCenter {
 
             socket.on('command', (unitID, type, direction) => {
                 console.log('New command: Unit #' + unitID + ' has to ' + type + ' in direction ' + direction);
+
                 const command = new Command(unitID, type, direction);
-                // Seems like the cope is wrong. How to do it right?
                 this.controller.takeCommand(command, userID);
             });
 
             socket.on('disconnect', () => {
-                // this.sockets.splice(this.sockets.indexOf(socket), 1);
+                console.log('A client disconnected');
 
-                // Seems like the cope is wrong. How to do it right?
+                // this.sockets.splice(this.sockets.indexOf(socket), 1);
                 this.connections.splice(this.connections.indexOf(connection), 1);
             });
         });
@@ -59,6 +67,7 @@ export default class CallCenter {
             const socket = connection.getSocket();
             socket.emit('state', stateAsJSON);
         }
+        console.log(stateAsJSON);
     }
 
     private getJSONFromState(state: State) {

@@ -17,23 +17,30 @@ export default class MapObject {
         return { ID: this.ID, posX: this.posX, posY: this.posY };
     }
 
-    getID() {
+    public getID() {
         return this.ID;
     }
 
-    getPosX() {
+    public getPosX() {
         return this.posX;
     }
 
-    getPosY() {
+    public getPosY() {
         return this.posY;
     }
 
-    setPosX(newPos: number) {
+    public setPosX(newPos: number) {
         this.posX = newPos;
     }
 
-    setPosY(newPos: number) {
+    public setPosY(newPos: number) {
         this.posY = newPos;
+    }
+
+    public getDistance(x: number, y: number) {
+        const dX = this.posX - x;
+        const dY = this.posY - y;
+
+        return Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
     }
 }

@@ -11,8 +11,8 @@
        "module": "commonjs",
        "moduleResolution": "node",
        "noImplicitAny": false,
-       "noUnusedLocals": true,
-       "noUnusedParameters": true,
+       "noUnusedLocals": false, // should be true for productive
+       "noUnusedParameters": false, // should be true for productive
        "removeComments": true,
        "preserveConstEnums": true,
        "skipLibCheck": true,

@@ -9,6 +9,11 @@ export default class FactoryStore implements Iterable<MapObject> {
     private unitCounter: number;
     private npcCounter: number;
 
+    constructor() {
+        this.unitCounter = 0;
+        this.npcCounter = 0;
+    }
+
     /**
      * getObjectByID
      */
@@ -50,6 +55,26 @@ export default class FactoryStore implements Iterable<MapObject> {
         if (index >= 0) {
             this.mapObjects.splice(index, 1);
         }
+    }
+
+    public getUnits(): Array<UnitObject> {
+        const units: Array<UnitObject> = [];
+
+        this.mapObjects.forEach((object) => {
+            if (object instanceof UnitObject) { units.push(object); }
+        });
+
+        return units;
+    }
+
+    public getNPCs(): Array<NPCObject> {
+        const units: Array<NPCObject> = [];
+
+        this.mapObjects.forEach((object) => {
+            if (object instanceof NPCObject) { units.push(object); }
+        });
+
+        return units;
     }
 
     *[Symbol.iterator]() {

@@ -19,6 +19,8 @@ export default class Game {
         // this.processCommands(commands);
 
         this.processCommandLists(commandLists);
+        this.processNPCActions();
+        this.addNPC();
         this.round++;
     }
 
@@ -30,6 +32,9 @@ export default class Game {
     public start(width: number, height: number) {
         this.round = 0;
         this.world = new World(width, height);
+        this.world.addUnit(4, 5);
+        this.world.addUnit(5, 5);
+        this.world.addUnit(5, 6);
     }
 
     /**
@@ -122,6 +127,29 @@ export default class Game {
 
         if (commandType === 'move') {
             return this.world.isMovePossible(unitID, directionX, directionY);
+        }
+
+        return false;
+    }
+
+    private processNPCActions() {
+        this.world.doNPCActions();
+    }
+
+    private addNPC() {
+        const direction = Math.floor((Math.random() * 4) + 1);
+        if (direction === 1 || direction === 3) {
+            const place = Math.floor((Math.random() * this.world.getSize[0]) + 1);
+            if (direction === 1) { this.world.addNPC(place - 1, 0); }
+            if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize[0] - 1); }
+
+            return true;
+        } else if (direction === 2 || direction === 4) {
+            const place = Math.floor((Math.random() * this.world.getSize[0]) + 1);
+            if (direction === 2) { this.world.addNPC(0, place - 1); }
+            if (direction === 4) { this.world.addNPC(this.world.getSize[1] - 1, place - 1); }
+
+            return true;
         }
 
         return false;
