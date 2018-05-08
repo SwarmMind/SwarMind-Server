@@ -17,9 +17,9 @@ export default class State {
      */
     public serialize(): string {
         const state = {
-            mapObjects: this.mapObjects.map(mapObject => mapObject.serialize()),
+            mapObjects: this.mapObjects.map((mapObject) => mapObject.serialize()),
         };
 
-        return JSON.stringify(state);       // stringify in COM
+        return JSON.stringify(state);       // stringify in COM?
     }
 }

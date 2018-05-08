@@ -2,12 +2,11 @@ import Command from './Command';
 import UserCommand from './UserCommand';
 import UserCommandCollection from './UserCommandCollection';
 
-// TODO: Implement bias updating
-
 export default class Overmind {
     // private commandCountToSelect = 5;
     // private commands: UserCommand[] = [];
     private userCommands: UserCommandCollection;
+    private userToUpgrade: Array<number>;
 
     constructor() {
         this.userCommands = new UserCommandCollection();
@@ -26,6 +25,7 @@ export default class Overmind {
 
         const commandsUnique: Array<Command> = [];
         const commandCounter: Array<number> = [];
+        const userIDs: Array<Array<number>> = [];
 
         commandList.forEach((userCommand) => {
             const command = userCommand.getCommand();
@@ -35,6 +35,7 @@ export default class Overmind {
                 const uniqueCommand = commandsUnique[i];
                 if (command.equals(uniqueCommand)) {
                     commandCounter[i] += user.getWeight();
+                    userIDs[i].push(user.getUserID());
                     // Does this really continue to the next iteration of the forEach loop?
                     return;
                 }
@@ -42,7 +43,10 @@ export default class Overmind {
 
             commandsUnique.push(command);
             commandCounter.push(user.getWeight());
+            userIDs.push([user.getUserID()]);
         });
+
+        let usersAdded = false;
 
         while (prioritizedCommands.length < commandsUnique.length) {
             // All this sorting stuff could be implemented more efficiently
@@ -59,7 +63,15 @@ export default class Overmind {
             }
 
             prioritizedCommands.push(commandsUnique[index]);
-            commandCounter[index] = 0;
+            commandsUnique.splice(index, 1);
+            commandCounter.splice(index, 1);
+
+            if (!usersAdded) {
+                usersAdded = true;
+                userIDs[index].forEach((userID) => {
+                    this.userToUpgrade.push(userID);
+                });
+            }
         }
 
         return prioritizedCommands;
@@ -88,6 +100,7 @@ export default class Overmind {
 
     public getCommandPriorities(): Array<Array<Command>> {
         const priorityLists: Array<Array<Command>> = [];
+        this.userToUpgrade = [];
 
         const commandLists = this.userCommands.getListsByUnit();
         commandLists.forEach((commandList) => {
@@ -103,7 +116,6 @@ export default class Overmind {
      */
     public takeCommand(userCommand: UserCommand) {
         this.userCommands.addCommand(userCommand);
-        // this.commands.push(userCommand);
     }
 
     /**
@@ -112,5 +124,9 @@ export default class Overmind {
     public resetCommands() {
         this.userCommands = new UserCommandCollection();
         // this.commands = [];
+    }
+
+    public getUsersToUpgrade(): Array<number> {
+        return this.userToUpgrade;
     }
 }

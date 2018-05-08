@@ -2,6 +2,7 @@ import CallCenter from './CallCenter';
 import Game from './Game';
 import Overmind from './Overmind';
 import UserCommand from './UserCommand';
+import UserManager from './UserManager';
 
 export default class Controller {
     private callCenter: CallCenter;
@@ -10,6 +11,8 @@ export default class Controller {
 
     private intervalID: any;         // for the handle returned by setInterval()
     private serverPort: number;
+
+    private userManager: UserManager;   // maybe we should reset the users to on restart?
 
     public constructor(port: number = 3000) {
         this.serverPort = port;
@@ -20,6 +23,8 @@ export default class Controller {
         this.callCenter = new CallCenter(this, this.serverPort);
         this.game = new Game();
         this.overmind = new Overmind();
+
+        this.userManager = new UserManager();
     }
 
     private setInterval(duration: number) {         // if the function is not binded it does not know the this context
@@ -61,5 +66,18 @@ export default class Controller {
         this.overmind.resetCommands();
         this.game.newRound(commandLists);
         this.callCenter.sendState(this.game.getState());
+
+        this.updateBiases();
+    }
+
+    private updateBiases() {
+        for (const user of this.userManager) {
+            user.setWeight(1);
+        }
+        const usersToUpgrade = this.overmind.getUsersToUpgrade();
+        usersToUpgrade.forEach((userID) => {
+            const user = this.userManager.getUserByID(userID);
+            user.setWeight(user.getWeight() + 0.3);
+        });
     }
 }

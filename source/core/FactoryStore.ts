@@ -3,8 +3,7 @@ import MapObject from './MapObject';
 import NPCObject from './NPCObject';
 import UnitObject from './UnitObject';
 
-// TODO: Implement Iterator
-export default class FactoryStore implements IterableIterator<MapObject> {
+export default class FactoryStore implements Iterable<MapObject> {
     private mapObjects: MapObject[] = [];
 
     private unitCounter: number;
@@ -55,26 +54,12 @@ export default class FactoryStore implements IterableIterator<MapObject> {
         }
     }
 
-    // Implementation changed so that FactoryStore implements the IterableIterator interface
-    public next(): IteratorResult<MapObject> {
-        if (this.pointer < this.mapObjects.length) {
-            return {done: false, value: this.mapObjects[this.pointer++]};
-        } else {
-            return {done: true, value: null};
-        }
-    }
-
-    [Symbol.iterator](): IterableIterator<MapObject> {
-        return this;
-    }
-
-    /*
     *[Symbol.iterator]() {
         // For what is the * symbol?
         for (const mapObject of this.mapObjects) {
             yield mapObject;
         }
     }
-    */
+
 
 }

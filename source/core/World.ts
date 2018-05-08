@@ -120,7 +120,7 @@ export default class World {
      */
     public getState(): State {
         const state =  new State();
-        for (const obj of this.store) { // Does this work with const?
+        for (const obj of this.store) {
             state.addMapObject(obj);
         }
         return state;

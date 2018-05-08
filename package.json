@@ -10,6 +10,7 @@
     "build": "npm run build-ts",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
+    "try": "npm run build && npm run start",
     "check": "tslint --type-check --project tsconfig.json --force --format stylish --config tslint.json",
     "deploy": "npm run check && npm run test && npm run build ",
     "test": "karma start karma.config.js",

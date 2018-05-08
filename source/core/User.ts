@@ -1,11 +1,17 @@
 export default class User {
+    private userID: number;
     private weight: number;
 
-    constructor() {
+    constructor(ID) {
+        this.userID = ID;
         this.weight = 1;
     }
 
-    public getWeight() {
+    public getUserID(): number {
+        return this.userID;
+    }
+
+    public getWeight(): number {
         return this.weight;
     }
 

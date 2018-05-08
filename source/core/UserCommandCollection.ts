@@ -19,7 +19,7 @@ export default class UserCommandCollection {
             const ID = command.getCommand().getUnitID();
             const index = unitIDList.indexOf(ID);
 
-            if (index != -1) {                          // ID is in unitIDList
+            if (index !== -1) {                          // ID is in unitIDList
                 listArray[index].push(command);
             } else {
                 unitIDList.push(ID);
