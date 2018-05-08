@@ -26,7 +26,7 @@ export default class CallCenter {
                 this.sockets.splice(this.sockets.indexOf(socket), 1);
             });
         });
-        console.log(arguments);
+
         server.listen(port, () => {
             console.log(`listening on Port: ${port}`);
         });
