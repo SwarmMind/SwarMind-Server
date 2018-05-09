@@ -2,8 +2,11 @@ import MapObject from './MapObject';
 
 export default class State {
     private mapObjects: MapObject[] = [];
+    private roundID: number;
 
-    constructor() {}
+    constructor(round: number) {
+        this.roundID = round;
+    }
 
     /**
      * addMapObject
@@ -17,6 +20,7 @@ export default class State {
      */
     public serialize(): string {
         const state = {
+            roundID: this.roundID,
             mapObjects: this.mapObjects.map((mapObject) => mapObject.serialize()),
         };
 

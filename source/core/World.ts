@@ -118,8 +118,8 @@ export default class World {
     /**
      * getState
      */
-    public getState(): State {
-        const state =  new State();
+    public getState(roundID: number): State {
+        const state =  new State(roundID);
         for (const obj of this.store) {
             state.addMapObject(obj);
         }

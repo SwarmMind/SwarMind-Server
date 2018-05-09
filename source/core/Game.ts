@@ -46,7 +46,7 @@ export default class Game {
      * returns the state-object that represents the current game-state
      */
     public getState(): State {
-        return this.world.getState();
+        return this.world.getState(this.round);
     }
 
     private processCommand(command: Command) {
