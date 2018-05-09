@@ -36,7 +36,7 @@ export default class CallCenter {
             this.connections.push(connection);
 
             const initState = this.getJSONFromObject(this.controller.getInitState());
-            socket.emit('state', initState);
+            socket.emit('initState', initState);
 
             socket.on('command', (unitID, type, direction) => {
                 console.log('New command: Unit #' + unitID + ' has to ' + type + ' in direction ' + direction);
