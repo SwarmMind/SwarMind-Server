@@ -50,7 +50,9 @@ export default class FactoryStore implements Iterable<MapObject> {
      * removeObject
      */
     public removeObject(ID: string) {       // quick and dirty
+        console.log(this.getObjectByID(ID));
         const index = this.mapObjects.indexOf(this.getObjectByID(ID));
+        console.log(index);
         assert(index >= 0);     // an object with this ID is in the store
         if (index >= 0) {
             this.mapObjects.splice(index, 1);

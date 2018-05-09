@@ -5,6 +5,8 @@ import Overmind from './Overmind';
 import UserCommand from './UserCommand';
 import UserManager from './UserManager';
 
+// TODO: We need a check for the end of the game (if all players are dead)
+
 export default class Controller {
     private callCenter: CallCenter;
     private game: Game;

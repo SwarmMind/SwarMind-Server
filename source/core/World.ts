@@ -154,6 +154,7 @@ export default class World {
 
                 if (dist <= 1 && (npc.getPosX() !== candidate.getPosX() || npc.getPosY() !== candidate.getPosY())) {
                     // Kill the unit
+                    units.splice(units.indexOf(candidate), 1);
                     this.removeObject(candidate.getID());
                 } else {
                     // Pretty quick and dirty...
