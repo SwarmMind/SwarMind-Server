@@ -5,8 +5,6 @@ import Overmind from './Overmind';
 import UserCommand from './UserCommand';
 import UserManager from './UserManager';
 
-// TODO: We need a check for the end of the game (if all players are dead)
-
 export default class Controller {
     private callCenter: CallCenter;
     private game: Game;
@@ -43,7 +41,7 @@ export default class Controller {
      */
     public start(width: number, height: number) {
         this.game.start(width, height);
-        this.setInterval(10 * 1000);
+        this.setInterval(10 * 10);
     }
 
     /**
@@ -84,9 +82,18 @@ export default class Controller {
 
         this.overmind.resetCommands();
         this.game.newRound(commandLists);
+        if (this.game.over()) {
+            this.setGameOver();
+            return;
+        }
         this.callCenter.sendState(this.game.getState());
 
         this.updateBiases();
+    }
+
+    private setGameOver() {
+        this.callCenter.informGameOver();
+        // Should be killed here
     }
 
     private updateBiases() {

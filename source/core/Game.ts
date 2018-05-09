@@ -53,6 +53,12 @@ export default class Game {
         return this.world.getSize();
     }
 
+    public over(): boolean {
+        if (this.world.unitsLeft() > 0) { return false; }
+
+        return true;
+    }
+
     private processCommand(command: Command) {
         const commandType = command.getType();
         const unitID = command.getUnitID();

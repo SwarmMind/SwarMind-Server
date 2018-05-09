@@ -191,6 +191,11 @@ export default class World {
         });
     }
 
+    public unitsLeft(): number {
+        const units = this.store.getUnits();
+        return units.length;
+    }
+
     private scanForFirstHit(posX: number, posY: number, directionX: number, directionY: number) {
         if (directionX > 0) { posX++; }
         if (directionX < 0) { posX--; }

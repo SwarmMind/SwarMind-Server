@@ -73,6 +73,14 @@ export default class CallCenter {
         console.log(stateAsJSON);
     }
 
+    public informGameOver() {
+        for (const connection of this.connections) {
+            const socket = connection.getSocket();
+            socket.emit('gameOver');
+        }
+        console.log('Game over');
+    }
+
     private getJSONFromObject(object: any) {
         return JSON.stringify(object);
     }
