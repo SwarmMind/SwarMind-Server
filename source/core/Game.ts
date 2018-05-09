@@ -58,8 +58,7 @@ export default class Game {
 
         if (commandType === 'move') {
             this.world.moveUnitIfPossible(unitID, directionX, directionY);
-        } 
-        else if (commandType === 'shoot') {
+        } else if (commandType === 'shoot') {
             this.world.processShot(unitID, directionX, directionY);
         }
     }
@@ -88,7 +87,7 @@ export default class Game {
                 } else if (commandType === 'move') {
                     moveCommands.push(command);
                 }
-                break;          
+                break;
             }
         });
 
@@ -120,8 +119,8 @@ export default class Game {
 
         const [directionX, directionY] = this.mapDirection(direction);
 
-        if (commandType === 'shoot') { 
-            return true; 
+        if (commandType === 'shoot') {
+            return true;
         }
         if (commandType === 'move') {
             return this.world.isMovePossible(unitID, directionX, directionY);

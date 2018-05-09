@@ -42,17 +42,16 @@ export default class Overmind {
                 }
             }*/
 
-            const index = commandsUnique.findIndex(uniqueCommand => command.equals(uniqueCommand));
+            const index = commandsUnique.findIndex((uniqueCommand) => command.equals(uniqueCommand));
 
-            if(index === -1){
+            if (index === -1) {
                 commandCounter[index] += user.getWeight();
                 userIDs[index].push(user.getUserID());
-            }
-            else{
+            } else {
                 commandsUnique.push(command);
                 commandCounter.push(user.getWeight());
                 userIDs.push([user.getUserID()]);
-            }            
+            }
         });
 
         let usersAdded = false;
@@ -108,17 +107,12 @@ export default class Overmind {
     }
 
     public getCommandPriorities(): Array<Array<Command>> {
-        //const priorityLists: Array<Array<Command>> = [];
-        //this.userToUpgrade = [];
-
-        /*const commandLists = this.userCommands.getListsByUnit();
-        commandLists.forEach((commandList) => {
-            priorityLists.push(this.prioritizeCommands(commandList));
-        });*/
+        // const priorityLists: Array<Array<Command>> = [];
+        this.userToUpgrade = [];
 
         const priorityLists = this.userCommands
                                     .getListsByUnit()
-                                    .map(commmandList => this.prioritizeCommands(commmandList));
+                                    .map((commandList) => this.prioritizeCommands(commandList));
 
         return priorityLists;
     }

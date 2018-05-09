@@ -21,8 +21,8 @@ export default class UserManager implements Iterable<User> {
     public getUserByID(ID: number): User {
         for (let i = 0; i < this.users.length; i++) {
             const user = this.users[i];
-            if (user.getUserID() === ID) { 
-                return user; 
+            if (user.getUserID() === ID) {
+                return user;
             }
         }
 
