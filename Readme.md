@@ -52,3 +52,6 @@ When a client connects, the server sends him an `initState` event. The `initStat
     }
 }
 ```
+
+### Game Over
+If the game is over (because all units have been killed), the server sends an `gameOver` event without any arguments.
