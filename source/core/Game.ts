@@ -49,6 +49,10 @@ export default class Game {
         return this.world.getState(this.round);
     }
 
+    public getSize(): Array<number> {
+        return this.world.getSize();
+    }
+
     private processCommand(command: Command) {
         const commandType = command.getType();
         const unitID = command.getUnitID();

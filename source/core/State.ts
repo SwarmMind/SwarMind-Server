@@ -18,12 +18,12 @@ export default class State {
     /**
      * serialize
      */
-    public serialize(): string {
+    public makeAny(): any {
         const state = {
             roundID: this.roundID,
             mapObjects: this.mapObjects.map((mapObject) => mapObject.serialize()),
         };
 
-        return JSON.stringify(state);       // stringify in COM?
+        return state;
     }
 }

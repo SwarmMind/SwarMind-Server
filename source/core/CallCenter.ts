@@ -35,6 +35,9 @@ export default class CallCenter {
             const connection = new Connection(socket, userID);
             this.connections.push(connection);
 
+            const initState = this.getJSONFromObject(this.controller.getInitState());
+            socket.emit('state', initState);
+
             socket.on('command', (unitID, type, direction) => {
                 console.log('New command: Unit #' + unitID + ' has to ' + type + ' in direction ' + direction);
 
@@ -59,7 +62,7 @@ export default class CallCenter {
      * sends game-state to all clients
      */
     public sendState(state: State) {
-        const stateAsJSON = this.getJSONFromState(state);
+        const stateAsJSON = this.getJSONFromObject(state);
         /*for (const socket of this.sockets) {
             socket.emit('state', stateAsJSON);
         }*/
@@ -70,7 +73,7 @@ export default class CallCenter {
         console.log(stateAsJSON);
     }
 
-    private getJSONFromState(state: State) {
-        return state.serialize();
+    private getJSONFromObject(object: any) {
+        return JSON.stringify(object);
     }
 }

@@ -64,6 +64,19 @@ export default class Controller {
         this.overmind.takeCommand(userCommand);
     }
 
+    public getInitState(): any {
+        const gameState = this.game.getState().makeAny();
+        const initState = {
+            state: gameState,
+            config: {
+                sizeX: this.game.getSize()[0],
+                sizeY: this.game.getSize()[1],
+            },
+        };
+
+        return initState;
+    }
+
     private processRound() {
         const commandLists = this.overmind.getCommandPriorities();
 
