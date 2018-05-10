@@ -5,19 +5,19 @@
        "allowSyntheticDefaultImports": false,
        "lib": [
            "dom",
-           "es2016" // important for ie11 support
+           "es2016"
        ],
        "target": "es6",
        "module": "commonjs",
        "moduleResolution": "node",
        "noImplicitAny": false,
-       "noUnusedLocals": false, // should be true for productive
-       "noUnusedParameters": false, // should be true for productive
+       "noUnusedLocals": false,
+       "noUnusedParameters": false,
        "removeComments": true,
        "preserveConstEnums": true,
        "skipLibCheck": true,
        "sourceMap": true,
-       "downlevelIteration": true,   // Important for iterator implementations
+       "downlevelIteration": true,
        "outDir": "dist",
        "baseUrl": ".",
        "paths": {
