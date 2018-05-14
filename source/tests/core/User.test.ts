@@ -2,9 +2,13 @@ import { expect } from 'chai';
 import User from './../../core/User';
 
 describe('User', () => {
-    it('can be constructed', () => {
+
+    it('gets correctly constructed and has working getters and setters', () => {
         const user = new User(1337);
-        const bla = 3;
-        expect(bla).to.equal(3);
+        user.setWeight(42);
+
+        expect(user).not.to.equal(undefined);
+        expect(user.getUserID()).to.equal(1337);
+        expect(user.getWeight()).to.equal(42);
     });
 });
