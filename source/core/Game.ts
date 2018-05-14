@@ -114,8 +114,8 @@ export default class Game {
     private mapDirection(direction: string): Array<number> {
         let directionX = 0;
         let directionY = 0;
-        if (direction === 'north') { directionY = -1; }
-        if (direction === 'south') { directionY = +1; }
+        if (direction === 'north') { directionY = +1; }
+        if (direction === 'south') { directionY = -1; }
         if (direction === 'west') { directionX = -1; }
         if (direction === 'east') { directionX = +1; }
 
