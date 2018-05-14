@@ -44,7 +44,7 @@ export default class Overmind {
 
             const index = commandsUnique.findIndex((uniqueCommand) => command.equals(uniqueCommand));
 
-            if (index === -1) {
+            if (index !== -1) {
                 commandCounter[index] += user.getWeight();
                 userIDs[index].push(user.getUserID());
             } else {
