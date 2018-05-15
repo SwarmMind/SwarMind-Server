@@ -117,7 +117,10 @@ export default class World {
      */
     public addNPC(x: number, y: number) {
         assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
-        this.fieldContents[x][y] = this.store.createNPC(x, y);
+        const npc = this.store.createNPC(x, y);
+        this.fieldContents[x][y] = npc;
+
+        return npc.getID();
     }
 
     /**
