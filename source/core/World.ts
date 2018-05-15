@@ -67,6 +67,8 @@ export default class World {
      * @param directionY Direction on y-Axis (will be checked for <0, 0, >0)
      */
     public processShot(unitID: string, directionX: number, directionY: number) {
+        console.log('trying to process a shot by unit #' + unitID + ' into direction x:' + directionX + ', y:' + directionY);
+
         // In this prototype always one of the directions will be 0 and the other one <>0
         // But later on this implementation can be used for diagonal shots
         if (directionX === 0 && directionY === 0) { return false; }
@@ -79,10 +81,12 @@ export default class World {
         const hitObject = this.scanForFirstHit(posX, posY, directionX, directionY);
         // This could maybe done in a better way with type assertions
         if (hitObject !== null) {
+            console.log('found an object in shooting direction: #' + hitObject.getID());
             if (
                 unit instanceof UnitObject && hitObject instanceof NPCObject ||
                 unit instanceof NPCObject && hitObject instanceof UnitObject
             ) {
+                console.log('trying to remove hitten NPC');
                 this.removeObject(hitObject.getID());
             }
         }
