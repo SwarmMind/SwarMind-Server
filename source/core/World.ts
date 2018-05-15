@@ -55,6 +55,11 @@ export default class World {
         const newX = unit.getPosX() + dX;
         const newY = unit.getPosY() + dY;
 
+        if (newX < 0) { return false; }
+        if (newX >= this.sizeX) { return false; }
+        if (newY < 0) { return false; }
+        if (newY >= this.sizeY) { return false; }
+
         if (this.fieldContents[newX][newY] !== null) { return false; }
 
         return true;
@@ -67,6 +72,8 @@ export default class World {
      * @param directionY Direction on y-Axis (will be checked for <0, 0, >0)
      */
     public processShot(unitID: string, directionX: number, directionY: number) {
+        console.log('trying to process a shot by unit #' + unitID + ' into direction x:' + directionX + ', y:' + directionY);
+
         // In this prototype always one of the directions will be 0 and the other one <>0
         // But later on this implementation can be used for diagonal shots
         if (directionX === 0 && directionY === 0) { return false; }
@@ -79,15 +86,19 @@ export default class World {
         const hitObject = this.scanForFirstHit(posX, posY, directionX, directionY);
         // This could maybe done in a better way with type assertions
         if (hitObject !== null) {
+            console.log('found an object in shooting direction: #' + hitObject.getID());
             if (
                 unit instanceof UnitObject && hitObject instanceof NPCObject ||
                 unit instanceof NPCObject && hitObject instanceof UnitObject
             ) {
+                console.log('trying to remove hitten NPC');
                 this.removeObject(hitObject.getID());
+                return true;
             }
         }
 
-        return true;
+        // return true;
+        return false;
     }
 
     /**
@@ -95,7 +106,10 @@ export default class World {
      */
     public addUnit(x: number, y: number) {
         assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
-        this.fieldContents[x][y] = this.store.createUnit(x, y);
+        const unit = this.store.createUnit(x, y);
+        this.fieldContents[x][y] = unit;
+
+        return unit.getID();
     }
 
     /**
@@ -103,7 +117,10 @@ export default class World {
      */
     public addNPC(x: number, y: number) {
         assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
-        this.fieldContents[x][y] = this.store.createNPC(x, y);
+        const npc = this.store.createNPC(x, y);
+        this.fieldContents[x][y] = npc;
+
+        return npc.getID();
     }
 
     /**
