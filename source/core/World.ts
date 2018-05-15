@@ -55,6 +55,11 @@ export default class World {
         const newX = unit.getPosX() + dX;
         const newY = unit.getPosY() + dY;
 
+        if (newX < 0) { return false; }
+        if (newX >= this.sizeX) { return false; }
+        if (newY < 0) { return false; }
+        if (newY >= this.sizeY) { return false; }
+
         if (this.fieldContents[newX][newY] !== null) { return false; }
 
         return true;
