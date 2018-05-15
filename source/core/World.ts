@@ -70,7 +70,7 @@ export default class World {
         // In this prototype always one of the directions will be 0 and the other one <>0
         // But later on this implementation can be used for diagonal shots
         if (directionX === 0 && directionY === 0) { return false; }
-        if (directionX !== 0 && directionY === 0) { return false; }
+        if (directionX !== 0 && directionY !== 0) { return false; }
 
         const unit = this.store.getObjectByID(unitID);
         const posX = unit.getPosX();

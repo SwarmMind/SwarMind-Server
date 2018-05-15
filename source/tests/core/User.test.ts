@@ -1,13 +1,14 @@
-import { should } from 'chai';
+import { expect } from 'chai';
 import User from './../../core/User';
-should();
 
 describe('User', () => {
-    it('can be constructed', () => {
+
+    it('gets correctly constructed and has working getters and setters', () => {
         const user = new User(1337);
-        // expect(user !== undefined).toBe(true);
-        // expect(user.getUserID() === 1337).toBe(true);
-        const bla = 3;
-        bla.should.equals(3, 'foo');
+        user.setWeight(42);
+
+        expect(user).not.to.equal(undefined);
+        expect(user.getUserID()).to.equal(1337);
+        expect(user.getWeight()).to.equal(42);
     });
 });
