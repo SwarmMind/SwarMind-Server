@@ -93,10 +93,12 @@ export default class World {
             ) {
                 console.log('trying to remove hitten NPC');
                 this.removeObject(hitObject.getID());
+                return true;
             }
         }
 
-        return true;
+        // return true;
+        return false;
     }
 
     /**
@@ -104,7 +106,10 @@ export default class World {
      */
     public addUnit(x: number, y: number) {
         assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
-        this.fieldContents[x][y] = this.store.createUnit(x, y);
+        const unit = this.store.createUnit(x, y);
+        this.fieldContents[x][y] = unit;
+
+        return unit.getID();
     }
 
     /**
