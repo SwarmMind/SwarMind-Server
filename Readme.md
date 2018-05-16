@@ -18,13 +18,21 @@ The format of the state (as `JSON`) looks like the following:
 ```json
 {
     "roundID": 42,
-    "mapObjects": [
+    "units": [
         {
             "ID": "unit0",
             "posX": 1,
             "posY": 3
         },
         ...
+        {
+            "ID": "unitx",
+            "posX": 3,
+            "posY": 7
+        },
+        ...
+    ],
+    "npcs": [
         {
             "ID": "npc0",
             "posX": 3,
