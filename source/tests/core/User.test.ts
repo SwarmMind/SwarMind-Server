@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import User from './../../core/User';
 
 describe('User', () => {
-
     it('gets correctly constructed and has working getters and setters', () => {
         const user = new User(1337);
         user.setWeight(42);
