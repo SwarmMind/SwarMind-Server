@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import MapObject from './../../core/MapObject';
 import State from './../../core/State';
+import NPCObject from '../../core/NPCObject';
+import UnitObject from '../../core/UnitObject';
 
 describe('User', () => {
     it('gets correctly constructed', () => {
@@ -9,20 +11,27 @@ describe('User', () => {
         expect(state).not.to.equal(undefined);
     });
 
-    it('can take a map object and can construct itself as a js-style-object', () => {
+    it('can take a user and npc objects and can construct itself as a js-style-object', () => {
         const state = new State(7);
 
-        const object = new MapObject('1337', 7, 7);
-        state.addMapObject(object);
+        const npc = new NPCObject('1337', 7, 7);
+        const unit = new UnitObject('1337', 7, 7);
+        state.addMapObject(npc);
+        state.addMapObject(unit);
         const anyObject = state.makeAny();
 
         expect(anyObject).to.eql({
             roundID: 7,
-            mapObjects: [{
-                ID: object.getID(),
-                posX: object.getPosX(),
-                posY: object.getPosY(),
+            units: [{
+                ID: unit.getID(),
+                posX: unit.getPosX(),
+                posY: unit.getPosY(),
             }],
+            npcs: [{
+                ID: npc.getID(),
+                posX: npc.getPosX(),
+                posY: npc.getPosY(),
+            }]
         });
     });
 });
