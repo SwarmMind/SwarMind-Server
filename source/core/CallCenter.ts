@@ -63,14 +63,12 @@ export default class CallCenter {
      */
     public sendState(state: State) {
         const stateAsJSON = this.getJSONFromObject(state);
-        /*for (const socket of this.sockets) {
-            socket.emit('state', stateAsJSON);
-        }*/
+
         for (const connection of this.connections) {
             const socket = connection.getSocket();
             socket.emit('state', stateAsJSON);
         }
-        console.log(stateAsJSON);
+        //console.log(stateAsJSON);
     }
 
     public informGameOver() {

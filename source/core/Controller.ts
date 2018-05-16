@@ -4,6 +4,7 @@ import Game from './Game';
 import Overmind from './Overmind';
 import UserCommand from './UserCommand';
 import UserManager from './UserManager';
+import NPCObject from './NPCObject';
 
 export default class Controller {
     private callCenter: CallCenter;
@@ -41,7 +42,7 @@ export default class Controller {
      */
     public start(width: number, height: number) {
         this.game.start(width, height);
-        this.setInterval(10 * 1000);
+        this.setInterval(5 * 1000);
     }
 
     /**
@@ -89,6 +90,8 @@ export default class Controller {
         this.callCenter.sendState(this.game.getState());
 
         this.updateBiases();
+        console.log('new round!');
+        console.log(this.game.world.fieldContents.map(row => row.map(x => x == null ? '.' : x instanceof NPCObject ? 'x' : 'o')));
     }
 
     private setGameOver() {

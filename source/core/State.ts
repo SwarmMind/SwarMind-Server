@@ -1,7 +1,9 @@
 import MapObject from './MapObject';
+import NPCObject from './NPCObject';
 
 export default class State {
-    private mapObjects: MapObject[] = [];
+    private units: MapObject[] = [];
+    private npcs: MapObject[] = []
     private roundID: number;
 
     constructor(round: number) {
@@ -12,7 +14,12 @@ export default class State {
      * addMapObject
      */
     public addMapObject(obj: MapObject) {
-        this.mapObjects.push(obj);
+        if(obj instanceof NPCObject){
+            this.npcs.push(obj);
+        }
+        else{
+            this.units.push(obj)
+        }
     }
 
     /**
@@ -21,7 +28,8 @@ export default class State {
     public makeAny(): any {
         const state = {
             roundID: this.roundID,
-            mapObjects: this.mapObjects.map((mapObject) => mapObject.serialize()),
+            units: this.units.map((mapObject) => mapObject.serialize()),
+            npcs: this.npcs.map((mapObject) => mapObject.serialize())
         };
 
         return state;

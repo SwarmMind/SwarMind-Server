@@ -10,7 +10,8 @@ export default class World {
     private sizeX: number;
     private sizeY: number;
     private store: FactoryStore;
-    private fieldContents: Array<Array<MapObject>>;
+    // TODO: make fieldContents private 
+    public fieldContents: Array<Array<MapObject>>;
 
     constructor(sizeX, sizeY) {
         this.sizeX = sizeX;
@@ -32,20 +33,23 @@ export default class World {
         }
     }
 
+    private moveMapObjectBY(mapObject: MapObject, dX: number, dY: number){
+        this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = null;
+        mapObject.moveBy(dX, dY);
+        this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = mapObject;
+    }
+
     /**
      * moveUnitBy
      */
     public moveUnitIfPossible(ID: string, dX: number, dY: number): boolean {
         const unit = this.store.getObjectByID(ID);
-        const newX = unit.getPosX() + dX;
-        const newY = unit.getPosY() + dY;
 
-        if (this.fieldContents[newX][newY] !== null) { return false; }
-
-        this.fieldContents[unit.getPosX()][unit.getPosY()] = null;
-        unit.setPosX(newX);
-        unit.setPosY(newY);
-        this.fieldContents[unit.getPosX()][unit.getPosY()] = unit;
+        if (!this.isMovePossible(ID, dX, dY)) { 
+            return false; 
+        }
+        
+        this.moveMapObjectBY(unit, dX, dY);
 
         return true;
     }
@@ -174,35 +178,42 @@ export default class World {
                     units.splice(units.indexOf(candidate), 1);
                     this.removeObject(candidate.getID());
                 } else {
+                    let dX = 0;
+                    let dY = 0;
+                    
                     // Pretty quick and dirty...
                     if (Math.abs(distX) > Math.abs(distY)) {
                         if (distX > 0) {
-                            npc.setPosX(npc.getPosX() + 1);
+                            dX = 1;
                         } else {
-                            npc.setPosX(npc.getPosX() - 1);
+                            dX = -1;
                         }
-                    } else if (Math.abs(distX) < Math.abs(distY)) {
+                    } 
+                    else if (Math.abs(distX) < Math.abs(distY)) {
                         if (distY > 0) {
-                            npc.setPosY(npc.getPosY() + 1);
+                            dY = 1;
                         } else {
-                            npc.setPosY(npc.getPosY() - 1);
+                            dY = -1;
                         }
-                    } else {
+                    } 
+                    else {
                         const rand = Math.floor((Math.random()) * 2 + 1);
+                        
                         if (rand === 1) {
                             if (distX > 0) {
-                                npc.setPosX(npc.getPosX() + 1);
+                                dX = 1;
                             } else {
-                                npc.setPosX(npc.getPosX() - 1);
+                                dX = -1;
                             }
                         } else {
                             if (distY > 0) {
-                                npc.setPosY(npc.getPosY() + 1);
+                                dY = 1;
                             } else {
-                                npc.setPosY(npc.getPosY() - 1);
+                                dY = -1;
                             }
                         }
                     }
+                    this.moveMapObjectBY(npc, dX, dY);
                 }
             }
         });

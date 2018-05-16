@@ -3,7 +3,8 @@ import State from './State';
 import World from './World';
 
 export default class Game {
-    private world: World;
+    // TODO: make world private
+    public world: World;
     private round: number;      // could an overflow occur???
 
     public getRound() {
@@ -15,7 +16,7 @@ export default class Game {
      */
     public newRound(commandLists: Array<Array<Command>>) {
         // this.processCommands(commands);
-
+        //console.log(commandLists);
         this.processCommandLists(commandLists);
         this.processNPCActions();
         this.addNPC();
@@ -67,8 +68,10 @@ export default class Game {
         const [directionX, directionY] = this.mapDirection(direction);
 
         if (commandType === 'move') {
+            console.log(unitID, directionX, directionY);
             this.world.moveUnitIfPossible(unitID, directionX, directionY);
-        } else if (commandType === 'shoot') {
+        } 
+        else if (commandType === 'shoot') {
             this.world.processShot(unitID, directionX, directionY);
         }
     }
@@ -79,45 +82,22 @@ export default class Game {
      * @param commandLists List of lists of commands
      */
     private processCommandLists(commandLists: Array<Array<Command>>) {
-        const shootCommands: Array<Command> = [];
-        const moveCommands: Array<Command> = [];
+        for(const commandList of commandLists){
+            const command = commandList.find(command => this.isCommandPossible(command))
 
-        commandLists.forEach((commandList) => {
-            while (commandList.length > 0) {
-                const command = commandList[0];
-                const commandType = command.getType();
-
-                if (!this.isCommandPossible(command)) {
-                    commandList.splice(0, 1);
-                    continue;
-                }
-
-                if (commandType === 'shoot') {
-                    shootCommands.push(command);
-                } else if (commandType === 'move') {
-                    moveCommands.push(command);
-                }
-                break;
+            if(command){
+                this.processCommand(command)
             }
-        });
-
-        this.processCommandList(shootCommands);
-        this.processCommandList(moveCommands);
-    }
-
-    private processCommandList(list: Array<Command>) {
-        list.forEach((command) => {
-            this.processCommand(command);
-        });
+        }
     }
 
     private mapDirection(direction: string): Array<number> {
         let directionX = 0;
         let directionY = 0;
-        if (direction === 'north') { directionY = +1; }
+        if (direction === 'north') { directionY = 1; }
         if (direction === 'south') { directionY = -1; }
         if (direction === 'west') { directionX = -1; }
-        if (direction === 'east') { directionX = +1; }
+        if (direction === 'east') { directionX = 1; }
 
         return [directionX, directionY];
     }
@@ -146,15 +126,11 @@ export default class Game {
     private addNPC() {
         const direction = Math.floor((Math.random() * 4) + 1);
         const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
-        if (direction >= 1 && direction <= 4) {                                     // why the if???
-            if (direction === 1) { this.world.addNPC(place - 1, 0); }
-            if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize()[0] - 1); }
-            if (direction === 2) { this.world.addNPC(0, place - 1); }
-            if (direction === 4) { this.world.addNPC(this.world.getSize()[1] - 1, place - 1); }
+        
+        if (direction === 1) { this.world.addNPC(place - 1, 0); }
+        if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize()[0] - 1); }
+        if (direction === 2) { this.world.addNPC(0, place - 1); }
+        if (direction === 4) { this.world.addNPC(this.world.getSize()[1] - 1, place - 1); }
 
-            return true;
-        }
-
-        return false;
     }
 }

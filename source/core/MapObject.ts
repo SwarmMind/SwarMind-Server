@@ -37,6 +37,11 @@ export default class MapObject {
         this.posY = newPos;
     }
 
+    moveBy(dX, dY){
+        this.posX = this.posX + dX
+        this.posY = this.posY + dY
+    }
+
     public getDistance(x: number, y: number) {
         const dX = this.posX - x;
         const dY = this.posY - y;
