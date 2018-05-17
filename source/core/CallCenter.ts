@@ -17,14 +17,6 @@ export default class CallCenter {
         this.connections = [];
 
         const server = http.createServer(app);    // Made APP to a function (thats how its used in the chat example)
-
-        /*app().get('/', (req, res) => {
-            res.sendFile(__dirname + '/index.html');
-        });
-        app().get('/', (req, res) => {
-            res.send('<h1>Hello world</h1>');
-        });*/
-
         const io = sio(server);
 
         io.on('connection', (socket: sio.Socket) => {

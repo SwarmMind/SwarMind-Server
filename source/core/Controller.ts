@@ -70,8 +70,8 @@ export default class Controller {
         const initState = {
             state: gameState,
             config: {
-                sizeX: this.game.getSize()[0],
-                sizeY: this.game.getSize()[1],
+                sizeX: this.game.getSize().x,
+                sizeY: this.game.getSize().y,
             },
         };
 
@@ -79,19 +79,18 @@ export default class Controller {
     }
 
     private processRound() {
-        const commandLists = this.overmind.getCommandPriorities();
-
         this.overmind.resetCommands();
-        this.game.newRound(commandLists);
-        if (this.game.over()) {
+        this.game.newRound(this.overmind.getCommandPriorities());
+        
+        if (this.game.isGameOver()) {
             this.setGameOver();
             return;
         }
-        this.callCenter.sendState(this.game.getState());
 
+        this.callCenter.sendState(this.game.getState());
         this.updateBiases();
+
         console.log('new round!');
-        console.log(this.game.world.fieldContents.map(row => row.map(x => x == null ? '.' : x instanceof NPCObject ? 'x' : 'o')));
     }
 
     private setGameOver() {
@@ -103,11 +102,12 @@ export default class Controller {
         for (const user of this.userManager) {
             user.setWeight(1);
         }
-        const usersToUpgrade = this.overmind.getUsersToUpgrade();
-        usersToUpgrade.forEach((userID) => {
-            const user = this.userManager.getUserByID(userID);
-            user.setWeight(user.getWeight() + 0.3);
-        });
+
+        for(const userID of this.overmind.getUsersToUpgrade()){
+            this.userManager
+                .getUserByID(userID)
+                .updateWeigthBy(0.3);
+        }
     }
 
     public registerNewUser(): number {

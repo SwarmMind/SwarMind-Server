@@ -66,7 +66,7 @@ describe('World', () => {
     it('returns the right size', () => {
         const w = new World(42, 1337);
 
-        expect(w.getSize()[0]).to.equal(42);
-        expect(w.getSize()[1]).to.equal(1337);
+        expect(w.getSize().x).to.equal(42);
+        expect(w.getSize().y).to.equal(1337);
     });
 });

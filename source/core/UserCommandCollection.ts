@@ -15,7 +15,7 @@ export default class UserCommandCollection {
         const listArray: Array<Array<UserCommand>> = [];
         const unitIDList: Array<string> = [];
 
-        this.commands.forEach((command) => {
+        for(const command of this.commands) {
             const ID = command.getCommand().getUnitID();
             const index = unitIDList.indexOf(ID);
 
@@ -25,7 +25,7 @@ export default class UserCommandCollection {
                 unitIDList.push(ID);
                 listArray.push([command]);
             }
-        });
+        }
 
         return listArray;
     }

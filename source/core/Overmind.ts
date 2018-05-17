@@ -31,19 +31,8 @@ export default class Overmind {
             const command = userCommand.getCommand();
             const user = userCommand.getUser();
 
-            /*for (let i = 0; i < commandsUnique.length; i++) {
-                const uniqueCommand = commandsUnique[i];
-                if (command.equals(uniqueCommand)) {
-                    commandCounter[i] += user.getWeight();
-                    userIDs[i].push(user.getUserID());
-                    // Does this really continue to the next iteration of the forEach loop?
-                    // Yeah it does
-                    return;
-                }
-            }*/
-
             const index = commandsUnique.findIndex((uniqueCommand) => command.equals(uniqueCommand));
-
+            
             if (index !== -1) {
                 commandCounter[index] += user.getWeight();
                 userIDs[index].push(user.getUserID());
@@ -85,36 +74,21 @@ export default class Overmind {
         return prioritizedCommands;
     }
 
+    // TODO: write method
+    private getListsByUnit(): UserCommand[][]{
+        return this.userCommands.getListsByUnit()
+    } 
+
     /**
      * @deprecated
      * returns the commands, that was choosen to be executed
      */
     public getSelectedCommands(): Command[] {
-        const selectedCommands: Command[] = [];
-
-        const commandLists = this.userCommands.getListsByUnit();
-        commandLists.forEach((commandList) => {
-            selectedCommands.push(this.selectCommand(commandList));
-        });
-
-        return selectedCommands;
-
-        /*for (let i = 0; i < this.commandCountToSelect; i++) {
-            selectedCommands.push(this.selectCommand());
-        }
-
-        return selectedCommands;*/
+        return this.getListsByUnit().map(commandList => this.selectCommand(commandList));
     }
 
     public getCommandPriorities(): Array<Array<Command>> {
-        // const priorityLists: Array<Array<Command>> = [];
-        this.userToUpgrade = [];
-
-        const priorityLists = this.userCommands
-                                    .getListsByUnit()
-                                    .map((commandList) => this.prioritizeCommands(commandList));
-
-        return priorityLists;
+        return this.getListsByUnit().map((commandList) => this.prioritizeCommands(commandList));
     }
 
     /**

@@ -10,8 +10,7 @@ export default class World {
     private sizeX: number;
     private sizeY: number;
     private store: FactoryStore;
-    // TODO: make fieldContents private 
-    public fieldContents: Array<Array<MapObject>>;
+    private fieldContents: Array<Array<MapObject>>;
 
     constructor(sizeX, sizeY) {
         this.sizeX = sizeX;
@@ -33,10 +32,12 @@ export default class World {
         }
     }
 
-    private moveMapObjectBY(mapObject: MapObject, dX: number, dY: number){
-        this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = null;
+    private moveMapObjectBY(mapObject: MapObject, dX: number, dY: number) {
+        const x = mapObject.getPosX(), y = mapObject.getPosY()
+
+        this.fieldContents[x][y] = null;
         mapObject.moveBy(dX, dY);
-        this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = mapObject;
+        this.fieldContents[x][y] = mapObject;
     }
 
     /**
@@ -45,10 +46,10 @@ export default class World {
     public moveUnitIfPossible(ID: string, dX: number, dY: number): boolean {
         const unit = this.store.getObjectByID(ID);
 
-        if (!this.isMovePossible(ID, dX, dY)) { 
-            return false; 
+        if (!this.isMovePossible(ID, dX, dY)) {
+            return false;
         }
-        
+
         this.moveMapObjectBY(unit, dX, dY);
 
         return true;
@@ -59,10 +60,8 @@ export default class World {
         const newX = unit.getPosX() + dX;
         const newY = unit.getPosY() + dY;
 
-        if (newX < 0) { return false; }
-        if (newX >= this.sizeX) { return false; }
-        if (newY < 0) { return false; }
-        if (newY >= this.sizeY) { return false; }
+        if (newX < 0 || newX >= this.sizeX) { return false; }
+        if (newY < 0 || newY >= this.sizeY) { return false; }
 
         if (this.fieldContents[newX][newY] !== null) { return false; }
 
@@ -92,8 +91,8 @@ export default class World {
         if (hitObject !== null) {
             console.log('found an object in shooting direction: #' + hitObject.getID());
             if (
-                unit instanceof UnitObject && hitObject instanceof NPCObject ||
-                unit instanceof NPCObject && hitObject instanceof UnitObject
+                unit.isUnit() && hitObject.isNPC() ||
+                unit.isNPC() && hitObject.isUnit()
             ) {
                 console.log('trying to remove hitten NPC');
                 this.removeObject(hitObject.getID());
@@ -101,15 +100,18 @@ export default class World {
             }
         }
 
-        // return true;
         return false;
+    }
+
+    private coordiantesAreInField(x, y){
+        return x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY;
     }
 
     /**
      * addUnit
      */
     public addUnit(x: number, y: number) {
-        assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
+        assert(this.coordiantesAreInField(x, y));
         const unit = this.store.createUnit(x, y);
         this.fieldContents[x][y] = unit;
 
@@ -120,7 +122,7 @@ export default class World {
      * addNPC
      */
     public addNPC(x: number, y: number) {
-        assert(x >= 0 && y >= 0 && x < this.sizeX && y < this.sizeY);
+        assert(this.coordiantesAreInField(x, y));
         const npc = this.store.createNPC(x, y);
         this.fieldContents[x][y] = npc;
 
@@ -140,15 +142,17 @@ export default class World {
      * getState
      */
     public getState(roundID: number): State {
-        const state =  new State(roundID);
+        const state = new State(roundID);
+
         for (const obj of this.store) {
             state.addMapObject(obj);
         }
+
         return state;
     }
 
-    public getSize(): Array<number> {
-        return [this.sizeX, this.sizeY];
+    public getSize(): {x: number, y: number}{
+        return {x: this.sizeX, y: this.sizeY};
     }
 
     public doNPCActions() {
@@ -180,7 +184,7 @@ export default class World {
                 } else {
                     let dX = 0;
                     let dY = 0;
-                    
+
                     // Pretty quick and dirty...
                     if (Math.abs(distX) > Math.abs(distY)) {
                         if (distX > 0) {
@@ -188,17 +192,17 @@ export default class World {
                         } else {
                             dX = -1;
                         }
-                    } 
+                    }
                     else if (Math.abs(distX) < Math.abs(distY)) {
                         if (distY > 0) {
                             dY = 1;
                         } else {
                             dY = -1;
                         }
-                    } 
+                    }
                     else {
                         const rand = Math.floor((Math.random()) * 2 + 1);
-                        
+
                         if (rand === 1) {
                             if (distX > 0) {
                                 dX = 1;
@@ -229,11 +233,12 @@ export default class World {
         if (directionX < 0) { posX--; }
         if (directionY > 0) { posY++; }
         if (directionY < 0) { posY--; }
-
-        while (posX >= 0 && posX < this.sizeX && posY >= 0 && posY < this.sizeY) {
+        
+        while (this.coordiantesAreInField(posX, posY)) {
             if (this.fieldContents[posX][posY] !== null) {
                 return this.fieldContents[posX][posY];
             }
+            
             if (directionX > 0) { posX++; }
             if (directionX < 0) { posX--; }
             if (directionY > 0) { posY++; }

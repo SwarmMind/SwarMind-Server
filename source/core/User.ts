@@ -18,4 +18,8 @@ export default class User {
     public setWeight(newWeight: number) {
         this.weight = newWeight;
     }
+
+    public updateWeigthBy(weight: number){
+        this.weight += weight;
+    }
 }

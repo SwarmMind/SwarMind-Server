@@ -18,24 +18,16 @@ export default class UserManager implements Iterable<User> {
         return ID;
     }
 
-    public getUserByID(ID: number): User {
-        for (let i = 0; i < this.users.length; i++) {
-            const user = this.users[i];
-            if (user.getUserID() === ID) {
-                return user;
-            }
-        }
-
-        return null;
+    public getUserByID(userID: number): User {   //otherwise would return undefined if ID not found
+        return this.users.find(user => user.getUserID() === userID) || null;
     }
 
     public removeUser(userID: number) {
-        for (let i = 0; i < this.users.length; i++) {
-            const user = this.users[i];
-            if (user.getUserID() === userID) {
-                this.users.splice(i, 1);
-                return true;
-            }
+        const index = this.users.findIndex(user => user.getUserID() === userID)
+
+        if(index >= 0){
+            this.users.splice(index, 1)
+            return true
         }
 
         return false;

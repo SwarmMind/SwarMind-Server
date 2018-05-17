@@ -60,23 +60,11 @@ export default class FactoryStore implements Iterable<MapObject> {
     }
 
     public getUnits(): Array<UnitObject> {
-        const units: Array<UnitObject> = [];
-
-        this.mapObjects.forEach((object) => {
-            if (object instanceof UnitObject) { units.push(object); }
-        });
-
-        return units;
+        return this.mapObjects.filter(obj => obj instanceof UnitObject);
     }
 
     public getNPCs(): Array<NPCObject> {
-        const units: Array<NPCObject> = [];
-
-        this.mapObjects.forEach((object) => {
-            if (object instanceof NPCObject) { units.push(object); }
-        });
-
-        return units;
+        return this.mapObjects.filter(obj => obj instanceof NPCObject);
     }
 
     *[Symbol.iterator]() {

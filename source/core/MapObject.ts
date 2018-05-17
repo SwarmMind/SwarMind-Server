@@ -48,4 +48,12 @@ export default class MapObject {
 
         return Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
     }
+
+    public isNPC(): boolean{
+        return false;
+    }
+
+    public isUnit(): boolean{
+        return false;
+    }
 }

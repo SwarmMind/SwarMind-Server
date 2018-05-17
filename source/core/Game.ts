@@ -3,8 +3,7 @@ import State from './State';
 import World from './World';
 
 export default class Game {
-    // TODO: make world private
-    public world: World;
+    private world: World;
     private round: number;      // could an overflow occur???
 
     public getRound() {
@@ -50,12 +49,14 @@ export default class Game {
         return this.world.getState(this.round);
     }
 
-    public getSize(): Array<number> {
+    public getSize(): {x: number, y: number} {
         return this.world.getSize();
     }
 
-    public over(): boolean {
-        if (this.world.unitsLeft() > 0) { return false; }
+    public isGameOver(): boolean {
+        if (this.world.unitsLeft() > 0) { 
+            return false; 
+        }
 
         return true;
     }
@@ -68,7 +69,6 @@ export default class Game {
         const [directionX, directionY] = this.mapDirection(direction);
 
         if (commandType === 'move') {
-            console.log(unitID, directionX, directionY);
             this.world.moveUnitIfPossible(unitID, directionX, directionY);
         } 
         else if (commandType === 'shoot') {
@@ -125,12 +125,12 @@ export default class Game {
 
     private addNPC() {
         const direction = Math.floor((Math.random() * 4) + 1);
-        const place = Math.floor((Math.random() * this.world.getSize()[0]) + 1);
+        const place = Math.floor((Math.random() * this.world.getSize().x) + 1);
         
         if (direction === 1) { this.world.addNPC(place - 1, 0); }
-        if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize()[0] - 1); }
+        if (direction === 3) { this.world.addNPC(place - 1, this.world.getSize().x - 1); }
         if (direction === 2) { this.world.addNPC(0, place - 1); }
-        if (direction === 4) { this.world.addNPC(this.world.getSize()[1] - 1, place - 1); }
+        if (direction === 4) { this.world.addNPC(this.world.getSize().y - 1, place - 1); }
 
     }
 }
