@@ -3,7 +3,8 @@ import State from './State';
 import World from './World';
 
 export default class Game {
-    private world: World;
+    // TODO: make private 
+    public world: World;
     private round: number;      // could an overflow occur???
 
     public getRound() {
@@ -14,8 +15,6 @@ export default class Game {
      * starts a new round
      */
     public newRound(commandLists: Array<Array<Command>>) {
-        // this.processCommands(commands);
-        //console.log(commandLists);
         this.processCommandLists(commandLists);
         this.processNPCActions();
         this.addNPC();
@@ -86,6 +85,7 @@ export default class Game {
             const command = commandList.find(command => this.isCommandPossible(command))
 
             if(command){
+                console.log(command);
                 this.processCommand(command)
             }
         }

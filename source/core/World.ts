@@ -10,7 +10,8 @@ export default class World {
     private sizeX: number;
     private sizeY: number;
     private store: FactoryStore;
-    private fieldContents: Array<Array<MapObject>>;
+    // TODO: make private
+    public fieldContents: Array<Array<MapObject>>;
 
     constructor(sizeX, sizeY) {
         this.sizeX = sizeX;
@@ -32,12 +33,10 @@ export default class World {
         }
     }
 
-    private moveMapObjectBY(mapObject: MapObject, dX: number, dY: number) {
-        const x = mapObject.getPosX(), y = mapObject.getPosY()
-
-        this.fieldContents[x][y] = null;
+    private moveMapObjectBy(mapObject: MapObject, dX: number, dY: number) {
+        this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = null;
         mapObject.moveBy(dX, dY);
-        this.fieldContents[x][y] = mapObject;
+        this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = mapObject;
     }
 
     /**
@@ -50,7 +49,7 @@ export default class World {
             return false;
         }
 
-        this.moveMapObjectBY(unit, dX, dY);
+        this.moveMapObjectBy(unit, dX, dY);
 
         return true;
     }
@@ -217,7 +216,7 @@ export default class World {
                             }
                         }
                     }
-                    this.moveMapObjectBY(npc, dX, dY);
+                    this.moveMapObjectBy(npc, dX, dY);
                 }
             }
         });

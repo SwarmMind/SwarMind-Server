@@ -79,9 +79,9 @@ export default class Controller {
     }
 
     private processRound() {
-        this.overmind.resetCommands();
         this.game.newRound(this.overmind.getCommandPriorities());
-        
+        this.overmind.resetCommands();
+
         if (this.game.isGameOver()) {
             this.setGameOver();
             return;
@@ -91,6 +91,7 @@ export default class Controller {
         this.updateBiases();
 
         console.log('new round!');
+        console.log(this.game.world.fieldContents.map(row => row.map(x => x == null ? '.' : x instanceof NPCObject ? 'x' : 'o')));
     }
 
     private setGameOver() {
