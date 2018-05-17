@@ -88,6 +88,7 @@ export default class Overmind {
     }
 
     public getCommandPriorities(): Array<Array<Command>> {
+        this.userToUpgrade = [];
         return this.getListsByUnit().map((commandList) => this.prioritizeCommands(commandList));
     }
 
