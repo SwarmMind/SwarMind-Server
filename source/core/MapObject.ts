@@ -43,10 +43,7 @@ export default class MapObject {
     }
 
     public getDistance(x: number, y: number) {
-        const dX = this.posX - x;
-        const dY = this.posY - y;
-
-        return Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+        return Math.sqrt(Math.pow(this.posX - x, 2) + Math.pow(this.posY - y, 2));
     }
 
     public isNPC(): boolean{

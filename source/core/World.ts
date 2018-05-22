@@ -9,7 +9,7 @@ export default class World {
 
     private sizeX: number;
     private sizeY: number;
-    private store: FactoryStore;
+    public store: FactoryStore;
     // TODO: make private
     public fieldContents: Array<Array<MapObject>>;
 
@@ -35,7 +35,9 @@ export default class World {
 
     private moveMapObjectBy(mapObject: MapObject, dX: number, dY: number) {
         this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = null;
-        mapObject.moveBy(dX, dY);
+        mapObject.moveBy(dX, dY);   
+        
+        // now the position of mapObject changed and must be accessed new
         this.fieldContents[mapObject.getPosX()][mapObject.getPosY()] = mapObject;
     }
 
@@ -82,10 +84,8 @@ export default class World {
         if (directionX !== 0 && directionY !== 0) { return false; }
 
         const unit = this.store.getObjectByID(unitID);
-        const posX = unit.getPosX();
-        const posY = unit.getPosY();
-
-        const hitObject = this.scanForFirstHit(posX, posY, directionX, directionY);
+        const hitObject = this.scanForFirstHit(unit.getPosX(), unit.getPosY(), directionX, directionY);
+       
         // This could maybe done in a better way with type assertions
         if (hitObject !== null) {
             console.log('found an object in shooting direction: #' + hitObject.getID());

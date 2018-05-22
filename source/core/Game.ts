@@ -109,6 +109,10 @@ export default class Game {
 
         const [directionX, directionY] = this.mapDirection(direction);
 
+        if(!this.world.store.getObjectByID(unitID)) {
+            return false;
+        }
+
         if (commandType === 'shoot') {
             return true;
         }
